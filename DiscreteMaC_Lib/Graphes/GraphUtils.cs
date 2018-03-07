@@ -75,7 +75,7 @@ namespace DiscreteMaC_Lib.Graphes
             for (int i = 1; i <= PointCount; i++)
             {
 
-                OutGraph.AddPoint(new Point("x0" + i.ToString(format)));
+                OutGraph.AddPoint(new Point("x" + i.ToString(format)));
             }
 
             return OutGraph;
