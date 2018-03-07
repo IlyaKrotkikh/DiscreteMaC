@@ -24,7 +24,7 @@ namespace DiscreteMaC_Lib.GraphNotations
 
         public override string ConvertFromGrapch(Graph<Edge> InitialGraph)
         {
-            string content = "# | ";
+            string content = InitialGraph.GraphName + " | ";
 
             List<Point> points = (InitialGraph.ListPoint.Keys.ToList());
             points.Sort((i1, i2) => { return i1.ID.CompareTo(i2.ID); });

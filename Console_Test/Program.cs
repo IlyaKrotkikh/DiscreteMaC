@@ -15,7 +15,7 @@ namespace Console_Test
     {
         static void Main(string[] args)
         {
-            OrientedGraph TestGrapch = new OrientedGraph("Test");
+            Graph<Edge> TestGrapch = new OrientedGraph("Test");
             TestGrapch.AddPoint(new Point("x1"));
             TestGrapch.AddPoint(new Point("x2"));
             TestGrapch.AddPoint(new Point("x3"));
@@ -33,8 +33,28 @@ namespace Console_Test
             TestGrapch.AddEdge(new Edge("a4", TestGrapchPoints[1], TestGrapchPoints[2]));
             TestGrapch.AddEdge(new Edge("a5", TestGrapchPoints[1], TestGrapchPoints[3]));
 
-            TextAdjacencyMatrixNotation notation = new TextAdjacencyMatrixNotation();
+            HtmlAdjacencyMatrixNotation notation = new HtmlAdjacencyMatrixNotation();
             Console.WriteLine(notation.ConvertFromGrapch(TestGrapch));
+
+            Console.ReadLine();
+
+            //int i = 8;
+            //while (i > 0)
+            //{
+            //    TestGrapch = GraphUtils.GenerateRandomDirectedGraph("g1", i, Convert.ToInt32(Math.Pow(i, 2)-1));
+            //    Console.WriteLine(notation.ConvertFromGrapch(TestGrapch));
+            //    i--;
+            //}
+
+            Graph<Edge> TestGrapch1 = GraphUtils.GenerateRandomDirectedGraph("g1",4,15);
+            Graph<Edge> TestGrapch2 = GraphUtils.GenerateRandomDirectedGraph("g2",6,10);
+
+            Console.WriteLine(notation.ConvertFromGrapch(TestGrapch1));
+            Console.WriteLine(notation.ConvertFromGrapch(TestGrapch2));
+
+            Graph<Edge> TestResultGraph = GraphUtils.DirectedGraphIntersection(TestGrapch1,TestGrapch2);
+
+            Console.WriteLine(notation.ConvertFromGrapch(TestResultGraph));
 
             Console.ReadLine();
         }

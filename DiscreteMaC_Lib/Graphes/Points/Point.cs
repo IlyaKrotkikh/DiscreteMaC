@@ -9,12 +9,12 @@ using System.Collections.ObjectModel;
 
 namespace DiscreteMaC_Lib.Graphes.Points
 {
-    public class Point
+    public class Point : IEquatable<Point>
     {
         private Dictionary<Edge, string> _ListEdges { get; set; }
 
         public string ID { get; set; }
-        public ReadOnlyDictionary<Edge,string> ListEdges { get; set; }
+        public ReadOnlyDictionary<Edge, string> ListEdges { get; set; }
 
         public Point(string ID)
         {
@@ -31,6 +31,16 @@ namespace DiscreteMaC_Lib.Graphes.Points
         public override string ToString()
         {
             return ID;
+        }
+
+        public bool Equals(Point other)
+        {
+
+            if (other == null)
+                return false;
+            else if (this.ID == other.ID)
+                return true;
+            else return false;
         }
     }
 }
