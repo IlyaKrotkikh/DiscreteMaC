@@ -21,8 +21,8 @@ namespace DiscreteMaC_Lib.Graphes
             List<Point> ListTempPoints = g1.ListPoint.Keys.ToList();
             List<Edge> ListTempEdges = g1.ListEdges.Keys.ToList();
 
-            ListTempPoints.AddRange((g2.ListPoint.Keys.ToList()).Except(g1.ListPoint.Keys.ToList(), new PointEqualityComparer()));
-            ListTempEdges = ListTempEdges.Intersect(g2.ListEdges.Keys.ToList(), new DirectedEdgeEqualityComparer()).ToList();
+            ListTempPoints.AddRange((g2.ListPoint.Keys.ToList()).Except(g1.ListPoint.Keys, new PointEqualityComparer()));
+            ListTempEdges = ListTempEdges.Intersect(g2.ListEdges.Keys, new DirectedEdgeEqualityComparer()).ToList();
 
             foreach (Point p in ListTempPoints)
             {
