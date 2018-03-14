@@ -24,15 +24,28 @@ namespace DiscreteMaC_Lib.GraphNotations
 
         public override string ConvertFromGrapch(Graph<Edge> InitialGraph)
         {
-            string content = "<!DOCTYPE HTML><html><head><meta charset =\"utf-8\" ></head>\n<body><table border = \"1\"><caption>";
-            content = String.Concat(content, InitialGraph.GraphName);
-            content = String.Concat(content, "</caption>\n<tr><th></th><th>");
-
-            List <Point> points = (InitialGraph.ListPoint.Keys.ToList());
+            List<Point> points = (InitialGraph.ListPoint.Keys.ToList());
             points.Sort((i1, i2) => { return i1.ID.CompareTo(i2.ID); });
+            StringBuilder HtmlStringBuilder;
+            try
+            {
+                int fileLength = points.Select(i1 => i1.ID.Length).Aggregate((i1, i2) => i1 + i2) * 2; // Double length (row and columns) names of points 
+                fileLength += 126; // <!DOCTYPE HTML><html><head><meta charset =\"utf-8\"></head><body><table border = "1"><caption></caption></table></body></html>
+                fileLength += InitialGraph.GraphName.Length; // Plus Graph name
+                fileLength += ((InitialGraph.ListPoint.Count + 2) * (InitialGraph.ListPoint.Count + 1)) * 9;// Count <tr></tr>, <th></th>, <td></td>
+                fileLength += (InitialGraph.ListPoint.Count * InitialGraph.ListPoint.Count); // Reserved for 0 or 1 in ref matrix
+                HtmlStringBuilder = new StringBuilder(fileLength, fileLength);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine(ex.Message);
+                HtmlStringBuilder = new StringBuilder(Int32.MaxValue);
+            }
 
-            content = String.Concat(content, String.Join("</th><th>", points.Select(i1 => i1.ID)));
-            content = String.Concat(content, "</th></tr>\n");
+            if (HtmlStringBuilder == null)
+                HtmlStringBuilder = new StringBuilder();
+            HtmlStringBuilder.AppendFormat("<!DOCTYPE HTML><html><head><meta charset =\"utf-8\"></head><body><table border = \"1\"><caption>{0}</caption>", InitialGraph.GraphName);
+            HtmlStringBuilder.AppendFormat("<tr><th></th><th>{0}</th></tr>",String.Join("</th><th>", points.Select(i1 => i1.ID)));
 
             byte[,] matrix = new byte[points.Count, points.Count];
             foreach (Edge e in InitialGraph.ListEdges.Keys)
@@ -41,22 +54,16 @@ namespace DiscreteMaC_Lib.GraphNotations
             }
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                content = String.Concat(content, "<tr><th>");
-                content = String.Concat(content, points[i].ToString());
-                content = String.Concat(content, "</th>");
+                HtmlStringBuilder.AppendFormat("<tr><th>{0}</th>", points[i].ToString());
 
                 for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    content = String.Concat(content, "<td>");
-                    content = String.Concat(content, matrix[i, j].ToString());
-                    content = String.Concat(content, "</td>");
+                    HtmlStringBuilder.AppendFormat("<td>{0}</td>", matrix[i, j].ToString());
 
-                }
-                content = String.Concat(content, "</tr>\n");
+                HtmlStringBuilder.Append("</tr>");
             }
-            content = String.Concat(content, "</table> </body></html>");
+            HtmlStringBuilder.Append("</table></body></html>");
 
-            return content;
+            return HtmlStringBuilder.ToString();
         }
 
         public override Graph<Edge> ConvertToGrapch(string InitialGraph)
