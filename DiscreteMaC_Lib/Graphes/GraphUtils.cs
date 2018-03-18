@@ -16,7 +16,8 @@ namespace DiscreteMaC_Lib.Graphes
 
         public static Graph<Edge> DirectedGraphIntersection(Graph<Edge> g1, Graph<Edge> g2)
         {
-            Graph<Edge> OutGraph = new OrientedGraph(g1.GraphName + " ∩ " + g2.GraphName);
+            string graphName = g1.GraphName + "∩" + g2.GraphName;
+            Graph<Edge> OutGraph = new OrientedGraph(graphName);
 
             List<Point> ListTempPoints = g1.ListPoint.Keys.ToList();
             List<Edge> ListTempEdges = g1.ListEdges.Keys.ToList();
@@ -28,9 +29,11 @@ namespace DiscreteMaC_Lib.Graphes
             {
                 OutGraph.AddPoint(new Point(p.ID));
             }
+            int i = 0;
             foreach (Edge e in ListTempEdges)
             {
-                OutGraph.AddEdge(e);
+                OutGraph.AddEdge(new Edge(graphName + "_" + i.ToString(), e));
+                i++;
             }
 
             return OutGraph;
