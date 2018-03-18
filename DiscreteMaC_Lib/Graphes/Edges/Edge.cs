@@ -19,5 +19,12 @@ namespace DiscreteMaC_Lib.Graphes.Edges
             this.StartPoint = StartPoint;
             this.EndPoint = EndPoint;
         }
+
+        public Edge(string Name, Edge EdgeToCopy)
+        {
+            this.Name = Name;
+            StartPoint = EdgeToCopy.StartPoint;
+            EndPoint = EdgeToCopy.EndPoint;
+        }
     }
 }
