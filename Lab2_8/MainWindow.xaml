@@ -5,8 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab2_8"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="440" Width="600">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+            <TextBlock Text="Лабораторная работа 2, Кротких." FontSize="24"/>
+        </Border>
+        <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding TaskText}" FontWeight="Bold" TextWrapping="Wrap" Margin="5"/>
+        <Grid Grid.Row="2"  Grid.Column="0" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Название графа"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Кол-во вершин"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Кол-во ребер"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="2" Text="{Binding GAjacM_Name}"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Margin="2" Text="{Binding GAjacM_Points}"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Margin="2" Text="{Binding GAjacM_Edges}"/>
+            <Button x:Name="BtnGenGraphG1" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="2">
+                <TextBlock Text="Задать граф"/>
+            </Button>
+        </Grid>
+        <StackPanel Grid.Row="2" Grid.Column="1" Margin="5">
+            <TextBlock Text="Вершина(ы) с максимальной полустепенью исхода:" TextWrapping="Wrap" Margin="2"/>
+            <TextBlock Text="{Binding TaskAnswer}" FontWeight="Bold" TextWrapping="Wrap" Margin="2"/>
+        </StackPanel>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Матрица смежности" Margin="2" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="Матрица инцидентности" Margin="2" HorizontalAlignment="Center"/>
+        <WebBrowser x:Name="BrowserGAjacM" Grid.Row="4" Grid.Column="0" Margin="2" local:BrowserBehavior.Html="{Binding HtmlDataGAjacM}"/>
+        <WebBrowser x:Name="BrowserGIncidM" Grid.Row="4" Grid.Column="1" Margin="2" local:BrowserBehavior.Html="{Binding HtmlDataGIncidM}"/>
+        <GridSplitter ResizeDirection="Columns" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" HorizontalAlignment="Left" ShowsPreview="True" Width="2"/>
     </Grid>
 </Window>
