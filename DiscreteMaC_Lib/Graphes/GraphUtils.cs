@@ -153,5 +153,24 @@ namespace DiscreteMaC_Lib.Graphes
             int minDegree = listDegrees.Min(i1 => i1.Value);
             return listDegrees.Where(i1 => i1.Value == minDegree);
         }
+
+        public static string GenerateGraphDescription(Graph<Edge> CurrentGraph)
+        {
+            StringBuilder descriptionBuilder = new StringBuilder(String.Format("{0} = ", CurrentGraph.GraphName));
+            descriptionBuilder.AppendFormat("{{{0}}} – множество вершин", String.Join(", ", CurrentGraph.ListPoint.Keys.Select(i1 => i1.ID)));
+
+            foreach (Point p in CurrentGraph.ListPoint.Keys)
+            {
+                IEnumerable<string> listEndPointsIDs = CurrentGraph.ListEdges.Where(i1 => i1.Key.StartPoint == p).Select(i1 => i1.Key.EndPoint.ID);
+                if (listEndPointsIDs.Count() > 0)
+                {
+                    descriptionBuilder.Append(", ");
+                    descriptionBuilder.AppendFormat("Г({0}) = {{ {1} }}", new string[] { p.ID, String.Join(", ", listEndPointsIDs) });
+                }
+            }
+
+            descriptionBuilder.Append(" – отображения.");
+            return descriptionBuilder.ToString();
+        }
     }
 }
