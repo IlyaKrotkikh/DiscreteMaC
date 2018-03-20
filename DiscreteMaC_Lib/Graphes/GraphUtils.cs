@@ -83,5 +83,42 @@ namespace DiscreteMaC_Lib.Graphes
 
             return OutGraph;
         }
+
+        public static int CountInDegreeForPoint(Graph<Edge> CurrentGraph, Point CurrentPoint)
+        {
+            if (!CurrentGraph.ListPoint.Contains(new KeyValuePair<Point, System.Collections.ObjectModel.ReadOnlyDictionary<Edge, string>>(CurrentPoint, CurrentPoint.ListEdges)))
+                throw new Exception("Point " + CurrentPoint.ToString() + " not contains in graph " + CurrentGraph);
+            return CurrentGraph.ListEdges.Count(i1 => i1.Key.EndPoint == CurrentPoint);
+        }
+        public static int CountOutDegreeForPoint(Graph<Edge> CurrentGraph, Point CurrentPoint)
+        {
+            if (!CurrentGraph.ListPoint.Contains(new KeyValuePair<Point, System.Collections.ObjectModel.ReadOnlyDictionary<Edge, string>>(CurrentPoint, CurrentPoint.ListEdges)))
+                throw new Exception("Point " + CurrentPoint.ToString() + " not contains in graph " + CurrentGraph);
+            return CurrentGraph.ListEdges.Count(i1 => i1.Key.StartPoint == CurrentPoint);
+        }
+
+        public static IEnumerable<KeyValuePair<Point, int>> CountInDegreeForAllPoint(Graph<Edge> CurrentGraph)
+        {
+            return CurrentGraph.ListPoint.
+                Select(i1 => { return new KeyValuePair<Point, int>(i1.Key, CountInDegreeForPoint(CurrentGraph, i1.Key)); });
+        }
+        public static IEnumerable<KeyValuePair<Point, int>> CountOutDegreeForAllPoint(Graph<Edge> CurrentGraph)
+        {
+            return CurrentGraph.ListPoint.
+                Select(i1 => { return new KeyValuePair<Point, int>(i1.Key, CountOutDegreeForPoint(CurrentGraph, i1.Key)); });
+        }
+
+        public static IEnumerable<KeyValuePair<Point, int>> GetPointsWithMaxInDegree(Graph<Edge> CurrentGraph)
+        {
+            IEnumerable<KeyValuePair<Point, int>> listDegrees = CountInDegreeForAllPoint(CurrentGraph);
+            int maxDegree = listDegrees.Max(i1 => i1.Value);
+            return listDegrees.Where(i1 => i1.Value == maxDegree);
+        }
+        public static IEnumerable<KeyValuePair<Point, int>> GetPointsWithMaxOutDegree(Graph<Edge> CurrentGraph)
+        {
+            IEnumerable<KeyValuePair<Point, int>> listDegrees = CountOutDegreeForAllPoint(CurrentGraph);
+            int maxDegree = listDegrees.Max(i1 => i1.Value);
+            return listDegrees.Where(i1 => i1.Value == maxDegree);
+        }
     }
 }
