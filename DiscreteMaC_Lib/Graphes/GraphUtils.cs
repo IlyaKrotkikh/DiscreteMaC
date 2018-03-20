@@ -38,6 +38,27 @@ namespace DiscreteMaC_Lib.Graphes
 
             return OutGraph;
         }
+        public static Graph<Edge> DirectedGraphUnion(Graph<Edge> g1, Graph<Edge> g2)
+        {
+            string graphName = g1.GraphName + "∪" + g2.GraphName;
+            Graph<Edge> OutGraph = new OrientedGraph(graphName);
+
+            IEnumerable<Point> ListTempPoints = g1.ListPoint.Keys.Union(g2.ListPoint.Keys, new PointEqualityComparer());
+            IEnumerable<Edge> ListTempEdges = g1.ListEdges.Keys.Union(g2.ListEdges.Keys, new DirectedEdgeEqualityComparer());
+
+            foreach (Point p in ListTempPoints)
+            {
+                OutGraph.AddPoint(new Point(p.ID));
+            }
+            int i = 0;
+            foreach (Edge e in ListTempEdges)
+            {
+                OutGraph.AddEdge(new Edge(graphName + "_" + i.ToString(), e));
+                i++;
+            }
+
+            return OutGraph;
+        }
 
         public static Graph<Edge> GenerateRandomDirectedGraph(string GraphName)
         {
