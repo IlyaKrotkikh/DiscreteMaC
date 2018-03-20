@@ -120,5 +120,17 @@ namespace DiscreteMaC_Lib.Graphes
             int maxDegree = listDegrees.Max(i1 => i1.Value);
             return listDegrees.Where(i1 => i1.Value == maxDegree);
         }
+        public static IEnumerable<KeyValuePair<Point, int>> GetPointsWithMinInDegree(Graph<Edge> CurrentGraph)
+        {
+            IEnumerable<KeyValuePair<Point, int>> listDegrees = CountInDegreeForAllPoint(CurrentGraph);
+            int minDegree = listDegrees.Min(i1 => i1.Value);
+            return listDegrees.Where(i1 => i1.Value == minDegree);
+        }
+        public static IEnumerable<KeyValuePair<Point, int>> GetPointsWithMinOutDegree(Graph<Edge> CurrentGraph)
+        {
+            IEnumerable<KeyValuePair<Point, int>> listDegrees = CountOutDegreeForAllPoint(CurrentGraph);
+            int minDegree = listDegrees.Min(i1 => i1.Value);
+            return listDegrees.Where(i1 => i1.Value == minDegree);
+        }
     }
 }
