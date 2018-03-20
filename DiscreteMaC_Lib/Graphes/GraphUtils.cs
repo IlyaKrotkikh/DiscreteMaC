@@ -62,7 +62,7 @@ namespace DiscreteMaC_Lib.Graphes
 
         public static Graph<Edge> GenerateRandomDirectedGraph(string GraphName)
         {
-            return GenerateRandomDirectedGraph(GraphName, GlobalRandom.Next(0, 101));
+            return GenerateRandomDirectedGraph(GraphName, GlobalRandom.Next(1, 101));
         }
         public static Graph<Edge> GenerateRandomDirectedGraph(string GraphName, int PointCount)
         {
