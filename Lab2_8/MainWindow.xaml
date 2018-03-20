@@ -39,14 +39,27 @@
             <TextBox Grid.Column="1" Grid.Row="0" Margin="2" Text="{Binding GAjacM_Name}"/>
             <TextBox Grid.Column="1" Grid.Row="1" Margin="2" Text="{Binding GAjacM_Points}"/>
             <TextBox Grid.Column="1" Grid.Row="2" Margin="2" Text="{Binding GAjacM_Edges}"/>
-            <Button x:Name="BtnGenGraphG1" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="2">
+            <Button x:Name="BtnGenGraphGAjacM" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="2" Click="BtnGenGraphGAjacM_Click">
                 <TextBlock Text="Задать граф"/>
             </Button>
         </Grid>
-        <StackPanel Grid.Row="2" Grid.Column="1" Margin="5">
-            <TextBlock Text="Вершина(ы) с максимальной полустепенью исхода:" TextWrapping="Wrap" Margin="2"/>
-            <TextBlock Text="{Binding TaskAnswer}" FontWeight="Bold" TextWrapping="Wrap" Margin="2"/>
-        </StackPanel>
+        <Grid Grid.Row="2" Grid.Column="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="Вершина(ы) с макс. полустепенью исхода:" TextWrapping="Wrap" Margin="2"/>
+            <ListView Grid.Row="1" ItemsSource="{Binding TaskAnswer}" Height="70">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="Вершина" DisplayMemberBinding="{Binding Key}"></GridViewColumn>
+                            <GridViewColumn Header="Полустепень исхода" DisplayMemberBinding="{Binding Value}"></GridViewColumn>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Матрица смежности" Margin="2" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="3" Grid.Column="1" Text="Матрица инцидентности" Margin="2" HorizontalAlignment="Center"/>
         <WebBrowser x:Name="BrowserGAjacM" Grid.Row="4" Grid.Column="0" Margin="2" local:BrowserBehavior.Html="{Binding HtmlDataGAjacM}"/>
