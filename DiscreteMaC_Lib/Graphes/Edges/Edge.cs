@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DiscreteMaC_Lib.Graphes.Points;
+using DiscreteMaC_Lib.Graphes.Edges.EdgeComparers;
 
 namespace DiscreteMaC_Lib.Graphes.Edges
 {
-    public class  Edge
+    public class  Edge : IEquatable<Edge>
     {
         public string Name;
         public Point StartPoint { get; set; }
@@ -25,6 +26,12 @@ namespace DiscreteMaC_Lib.Graphes.Edges
             this.Name = Name;
             StartPoint = EdgeToCopy.StartPoint;
             EndPoint = EdgeToCopy.EndPoint;
+        }
+
+        public bool Equals(Edge other)
+        {
+            DirectedEdgeEqualityComparer defComperer = new DirectedEdgeEqualityComparer();
+            return defComperer.Equals(this, other);
         }
     }
 }

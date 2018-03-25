@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DiscreteMaC_Lib.Graphes.Edges;
 using DiscreteMaC_Lib.Graphes.Edges.EdgeComparers;
+using DiscreteMaC_Lib.Graphes.Points.PointComparers;
 using System.Collections.ObjectModel;
 
 namespace DiscreteMaC_Lib.Graphes.Points
@@ -35,12 +36,8 @@ namespace DiscreteMaC_Lib.Graphes.Points
 
         public bool Equals(Point other)
         {
-
-            if (other == null)
-                return false;
-            else if (this.ID == other.ID)
-                return true;
-            else return false;
+            PointEqualityComparer defComparer = new PointEqualityComparer();
+            return defComparer.Equals(this, other);
         }
     }
 }
