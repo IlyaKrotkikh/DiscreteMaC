@@ -8,55 +8,59 @@ using DiscreteMaC_Lib.Graphes.Points;
 using DiscreteMaC_Lib.Graphes.Edges;
 using DiscreteMaC_Lib.GraphNotations;
 using DiscreteMaC_Lib.Graphes.Edges.EdgeComparers;
+using DiscreteMaC_Lib.Graphes.Paths;
 
 namespace Console_Test
 {
     class Program
     {
+        static bool stop;
+        static TextAdjacencyMatrixNotation notation;
+        static Graph<Edge> TestGrapch1;
+
         static void Main(string[] args)
         {
-            Graph<Edge> TestGrapch = new OrientedGraph("Test");
-            TestGrapch.AddPoint(new Point("x1"));
-            TestGrapch.AddPoint(new Point("x2"));
-            TestGrapch.AddPoint(new Point("x3"));
-            TestGrapch.AddPoint(new Point("x4"));
+            stop = false;
+            notation = new TextAdjacencyMatrixNotation();
+
+            TestGrapch1 = new OrientedGraph("g1");
+            Point x1 = new Point("x1");
+            TestGrapch1.AddPoint(x1);
+            Point x2 = new Point("x2");
+            TestGrapch1.AddPoint(x2);
+            Point x3 = new Point("x3");
+            TestGrapch1.AddPoint(x3);
+            Point x4 = new Point("x4");
+            TestGrapch1.AddPoint(x4);
 
 
-            List<Point> TestGrapchPoints = TestGrapch.ListPoint.Keys.ToList();
-
-            Edge a1 = new Edge("a1", TestGrapchPoints[0], TestGrapchPoints[0]);
-            Edge a2 = new Edge("a2", TestGrapchPoints[0], TestGrapchPoints[3]);
-
-            TestGrapch.AddEdge(a1);
-            TestGrapch.AddEdge(a2);
-            TestGrapch.AddEdge(new Edge("a3", TestGrapchPoints[0], TestGrapchPoints[1]));
-            TestGrapch.AddEdge(new Edge("a4", TestGrapchPoints[1], TestGrapchPoints[2]));
-            TestGrapch.AddEdge(new Edge("a5", TestGrapchPoints[1], TestGrapchPoints[3]));
-
-            HtmlAdjacencyMatrixNotation notation = new HtmlAdjacencyMatrixNotation();
-            Console.WriteLine(notation.ConvertFromGrapch(TestGrapch));
-
-            Console.ReadLine();
-
-            //int i = 8;
-            //while (i > 0)
-            //{
-            //    TestGrapch = GraphUtils.GenerateRandomDirectedGraph("g1", i, Convert.ToInt32(Math.Pow(i, 2)-1));
-            //    Console.WriteLine(notation.ConvertFromGrapch(TestGrapch));
-            //    i--;
-            //}
-
-            Graph<Edge> TestGrapch1 = GraphUtils.GenerateRandomDirectedGraph("g1",4,15);
-            Graph<Edge> TestGrapch2 = GraphUtils.GenerateRandomDirectedGraph("g2",6,10);
+            TestGrapch1.AddEdge(new Edge("a1", x1, x2));
+            TestGrapch1.AddEdge(new Edge("a2", x1, x3));
+            TestGrapch1.AddEdge(new Edge("a1", x3, x4));
+            TestGrapch1.AddEdge(new Edge("a1", x4, x2));
 
             Console.WriteLine(notation.ConvertFromGrapch(TestGrapch1));
-            Console.WriteLine(notation.ConvertFromGrapch(TestGrapch2));
+            Console.WriteLine(GraphUtils.IsDirectedTree(TestGrapch1));
+            Console.ReadLine();
 
-            Graph<Edge> TestResultGraph = GraphUtils.DirectedGraphIntersection(TestGrapch1,TestGrapch2);
-
-            Console.WriteLine(notation.ConvertFromGrapch(TestResultGraph));
+            Task task = new Task(BuildGrapgAndTestIt);
+            task.Start();
 
             Console.ReadLine();
+            stop = true;
+            Console.ReadLine();
+        }
+
+        public static void BuildGrapgAndTestIt()
+        {
+            while (!stop)
+            {
+                TestGrapch1 = GraphUtils.GenerateRandomDirectedGraph("g1", 4, 3);
+
+                Console.WriteLine(notation.ConvertFromGrapch(TestGrapch1));
+                Console.WriteLine(GraphUtils.IsDirectedTree(TestGrapch1));
+
+            }
         }
     }
 }
