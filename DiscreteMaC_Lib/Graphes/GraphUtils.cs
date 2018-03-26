@@ -7,6 +7,7 @@ using DiscreteMaC_Lib.Graphes.Edges;
 using DiscreteMaC_Lib.Graphes.Points;
 using DiscreteMaC_Lib.Graphes.Points.PointComparers;
 using DiscreteMaC_Lib.Graphes.Edges.EdgeComparers;
+using DiscreteMaC_Lib.Graphes.Paths;
 
 namespace DiscreteMaC_Lib.Graphes
 {
@@ -60,6 +61,8 @@ namespace DiscreteMaC_Lib.Graphes
             return OutGraph;
         }
 
+
+        //TODO: Переделать тип методов в OrientedGraph
         public static Graph<Edge> GenerateRandomDirectedGraph(string GraphName)
         {
             return GenerateRandomDirectedGraph(GraphName, GlobalRandom.Next(1, 101));
@@ -152,6 +155,83 @@ namespace DiscreteMaC_Lib.Graphes
             IEnumerable<KeyValuePair<Point, int>> listDegrees = CountOutDegreeForAllPoint(CurrentGraph);
             int minDegree = listDegrees.Min(i1 => i1.Value);
             return listDegrees.Where(i1 => i1.Value == minDegree);
+        }
+
+        //public static List<Path> GetAllGraphPaths(Graph<Edge> CurrentGraph)
+        //{
+        //    List<Path> listPaths = CurrentGraph.ListEdges.Keys.Select<Edge, Path>(i1 =>
+        //     {
+        //         Path path = Path.InitPath();
+        //         path.AddEdge(i1);
+        //         return path;
+        //     }).ToList();
+
+        //    for (int i = 0; i < listPaths.Count(); i++)
+        //    {
+        //        Path p = listPaths[i];
+        //        Edge endEdge = p.ListPathEdges.Last();
+        //        listPaths.InsertRange(listPaths.Count, CurrentGraph.ListEdges.Keys
+        //            .Where(i1 => endEdge.EndPoint == i1.StartPoint
+        //                && !i1.Equals(endEdge)
+        //                && p.ListPathEdges.First().StartPoint != i1.EndPoint)
+        //            .Select(i1 =>
+        //            {
+        //                Path path = Path.InitPath(p);
+        //                path.AddEdge(i1);
+        //                return path;
+        //            }));
+        //    }
+        //    return listPaths;
+        //}
+
+        public static bool CheckSimpleCycles(Graph<Edge> CurrentGraph)
+        {
+            if (CurrentGraph.ListEdges.Count(i1 => i1.Key.StartPoint == i1.Key.EndPoint) != 0)
+                return true;
+            else return false;
+        }
+        public static bool CheckCycles(Graph<Edge> CurrentGraph)
+        {
+            if (CheckSimpleCycles(CurrentGraph))
+                return true;
+
+            List<Path> listPaths = CurrentGraph.ListEdges.Keys.Select<Edge, Path>(i1 =>
+            {
+                Path path = Path.InitPath();
+                path.AddEdge(i1);
+                return path;
+            }).ToList();
+
+            for (int i = 0; i < listPaths.Count(); i++)
+            {
+                Path currentPath = listPaths[i];
+                IEnumerable<Edge> candidatesToPath = CurrentGraph.ListEdges.Keys.Where(i1 => i1.StartPoint == currentPath.ListPathEdges.Last().EndPoint);
+                foreach (Edge e in candidatesToPath)
+                {
+                    if (currentPath.ListPathPoints.Contains(e.EndPoint))
+                        return true;
+                    else
+                    {
+                        Path newPath = Path.InitPath(currentPath);
+                        newPath.AddEdge(e);
+                        listPaths.Add(newPath);
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static bool IsDirectedTree(Graph<Edge> CurrentGraph)
+        {
+            if (CheckCycles(CurrentGraph))
+                return false;
+
+            IEnumerable<KeyValuePair<Point, int>> inDegrees = CountInDegreeForAllPoint(CurrentGraph);
+            if (CurrentGraph.ListEdges.Count(i1 => i1.Key.StartPoint == i1.Key.EndPoint) == 0 &&
+                inDegrees.Count(i1 => i1.Value == 0) == 1 &&
+                inDegrees.Count(i1 => i1.Value > 1) == 0)
+                return true;
+            else return false;
         }
 
         public static string GenerateGraphDescription(Graph<Edge> CurrentGraph)
