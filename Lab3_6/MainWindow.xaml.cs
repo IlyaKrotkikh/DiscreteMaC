@@ -56,7 +56,7 @@ namespace Lab3_6
                 if (MainGraph != null)
                     MainGraph.GraphName = _MainGraphName;
                 NotifyPropertyChanged();
-                NotifyPropertyChanged("MainGarph");
+                NotifyPropertyChanged("MainGraph");
             }
         }
         public int MainGraphPointsCount
@@ -128,9 +128,9 @@ namespace Lab3_6
 
             MainGraphName = "g1";
             MainGraphPointsCount = 5;
-            TaskAnswer = false;
 
-            MainGraph = GraphUtils.GenerateRandomDirectedGraph(MainGraphName, MainGraphPointsCount);
+            MainGraph = GraphUtils.GenerateRandomDirectedGraph(MainGraphName, MainGraphPointsCount, MainGraphPointsCount -1);
+            TaskAnswer = GraphUtils.IsDirectedTree(MainGraph);
 
             ListMainGraphPoints = new ObservableCollection<DiscreteMaC_Lib.Graphes.Points.Point>(MainGraph.ListPoint.Keys);
         }
@@ -138,6 +138,33 @@ namespace Lab3_6
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void BtnCreateEmptyGraph_Click(object sender, RoutedEventArgs e)
+        {
+            MainGraph = GraphUtils.GenerateEmptyDirectedGrapch(MainGraphName, MainGraphPointsCount);
+            TaskAnswer = false;
+        }
+
+        private void BtnAddEdge_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Edge newEdge = new Edge(MainGraphName + _MainGraph.ListEdges.Count().ToString(), SelectedStartPoint, SelectedEndPoint);
+                MainGraph.AddEdge(newEdge);
+                NotifyPropertyChanged("MainGraph");
+                TaskAnswer = GraphUtils.IsDirectedTree(MainGraph);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка добавления");
+            }
+        }
+
+        private void BtnGenRandomEdges_Click(object sender, RoutedEventArgs e)
+        {
+            MainGraph = GraphUtils.GenerateRandomDirectedGraph(MainGraphName, MainGraphPointsCount, MainGraphPointsCount - 1);
+            TaskAnswer = GraphUtils.IsDirectedTree(MainGraph);
         }
     }
 }
