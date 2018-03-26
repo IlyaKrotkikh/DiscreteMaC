@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab3_6"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Lab3_6.MainWindow"
+        xmlns:LibDMaC="clr-namespace:DiscreteMaC_Lib.GraphNotations;assembly=DiscreteMaC_Lib"
         mc:Ignorable="d"
         Title="Лабораторная 3, Вариант 6" Height="350" Width="539">
+    <Window.Resources>
+        <LibDMaC:HtmlAdjacencyMatrixNotation x:Key="HtmlAdjacencyMatrixConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -22,7 +26,7 @@
             <TextBlock Margin="2" TextWrapping="WrapWithOverflow" Text="Определить является ли граф ориентированным деревом."/>
             <StackPanel Margin="2" Orientation="Horizontal">
                 <TextBlock Text="Ответ: " FontWeight="Bold"/>
-                <CheckBox IsEnabled="False"/>
+                <CheckBox IsEnabled="False" IsChecked="{Binding TaskAnswer}"/>
             </StackPanel>
         </StackPanel>
         <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
@@ -42,9 +46,9 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Text="Параметры графа" TextAlignment="Center" FontWeight="Bold"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Margin="2" Text="Название: "/>
-            <TextBox Grid.Row="1" Grid.Column="1" Margin="2"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="2" Text="{Binding MainGraphName}"/>
             <TextBlock Grid.Row="2" Grid.Column="0" Margin="2" Text="Кол-во вершин: "/>
-            <ComboBox Grid.Row="2" Grid.Column="1" Margin="2">
+            <ComboBox Grid.Row="2" Grid.Column="1" Margin="2" SelectedValue="{Binding MainGraphPointsCount}">
                 <System:Int32>4</System:Int32>
                 <System:Int32>5</System:Int32>
                 <System:Int32>6</System:Int32>
@@ -57,11 +61,11 @@
             <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Text="Назначить ребра" TextAlignment="Center" FontWeight="Bold"/>
             <StackPanel Grid.Row="5" Grid.Column="0">
                 <TextBlock Margin="2" Text="Верш. начала"/>
-                <ComboBox Margin="2"/>
+                <ComboBox Margin="2" SelectedValue="{Binding SelectedStartPoint}"  ItemsSource="{Binding ListMainGraphPoints}"/>
             </StackPanel>
             <StackPanel Grid.Row="5" Grid.Column="1">
                 <TextBlock Margin="2" Text="Верш. окончания"/>
-                <ComboBox Margin="2"/>
+                <ComboBox Margin="2" SelectedValue="{Binding SelectedEndPoint}" ItemsSource="{Binding ListMainGraphPoints}"/>
             </StackPanel>
             <Button x:Name="BtnAddEdge" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="2">
                 <TextBlock Text="Добавить вершину"/>
@@ -70,6 +74,6 @@
                 <TextBlock Text="Генерировать случайно"/>
             </Button>
         </Grid>
-        <WebBrowser Grid.Row="2" Grid.Column="1" Margin="2"/>
+        <WebBrowser Grid.Row="2" Grid.Column="1" Margin="2" local:BrowserBehavior.Html="{Binding MainGraph, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
     </Grid>
 </Window>
