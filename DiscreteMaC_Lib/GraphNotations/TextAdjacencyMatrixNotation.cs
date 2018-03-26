@@ -7,19 +7,25 @@ using System.Threading.Tasks;
 using DiscreteMaC_Lib.Graphes;
 using DiscreteMaC_Lib.Graphes.Edges;
 using DiscreteMaC_Lib.Graphes.Points;
+using System.Windows.Data;
 
 namespace DiscreteMaC_Lib.GraphNotations
 {
+    [ValueConversion(typeof(Graph<Edge>), typeof(string))]
     public class TextAdjacencyMatrixNotation : TypedGraphNotation<string>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            if (value == null)
+                throw new Exception("Converted value is null");
+            return ConvertFromGrapch(value as Graph<Edge>);
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            if (value == null)
+                throw new Exception("Converted value is null");
+            return ConvertToGrapch(value as string);
         }
 
         public override string ConvertFromGrapch(Graph<Edge> InitialGraph)
