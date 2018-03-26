@@ -7,7 +7,7 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Lab3_6.MainWindow"
         xmlns:LibDMaC="clr-namespace:DiscreteMaC_Lib.GraphNotations;assembly=DiscreteMaC_Lib"
         mc:Ignorable="d"
-        Title="Лабораторная 3, Вариант 6" Height="350" Width="539">
+        Title="Лабораторная 3, Вариант 6" Height="400" Width="539">
     <Window.Resources>
         <LibDMaC:HtmlAdjacencyMatrixNotation x:Key="HtmlAdjacencyMatrixConverter"/>
     </Window.Resources>
@@ -55,7 +55,7 @@
                 <System:Int32>7</System:Int32>
                 <System:Int32>8</System:Int32>
             </ComboBox>
-            <Button x:Name="BtnCreateEmptyGraph" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="2">
+            <Button x:Name="BtnCreateEmptyGraph" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Click="BtnCreateEmptyGraph_Click">
                 <TextBlock Text="Создать пустой граф"/>
             </Button>
             <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Text="Назначить ребра" TextAlignment="Center" FontWeight="Bold"/>
@@ -67,10 +67,10 @@
                 <TextBlock Margin="2" Text="Верш. окончания"/>
                 <ComboBox Margin="2" SelectedValue="{Binding SelectedEndPoint}" ItemsSource="{Binding ListMainGraphPoints}"/>
             </StackPanel>
-            <Button x:Name="BtnAddEdge" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="2">
+            <Button x:Name="BtnAddEdge" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Click="BtnAddEdge_Click">
                 <TextBlock Text="Добавить вершину"/>
             </Button>
-            <Button x:Name="BtnGenRandomEdges" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="2">
+            <Button x:Name="BtnGenRandomEdges" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Click="BtnGenRandomEdges_Click">
                 <TextBlock Text="Генерировать случайно"/>
             </Button>
         </Grid>
