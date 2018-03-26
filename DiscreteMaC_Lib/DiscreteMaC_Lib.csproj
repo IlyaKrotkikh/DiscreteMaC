@@ -49,6 +49,9 @@
     <Compile Include="Graphes\Graph.cs" />
     <Compile Include="Graphes\GraphUtils.cs" />
     <Compile Include="Graphes\OrientedGraph.cs" />
+    <Compile Include="Graphes\Paths\AbstractPath.cs" />
+    <Compile Include="Graphes\Paths\Path.cs" />
+    <Compile Include="Graphes\Paths\PathComparers\PathEqualityComparer.cs" />
     <Compile Include="Graphes\Points\PointComparers\PointEqualityComparer.cs" />
     <Compile Include="GraphNotations\GraphNotation.cs" />
     <Compile Include="GraphNotations\HtmlAdjacencyMatrixNotation.cs" />
