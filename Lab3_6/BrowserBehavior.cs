@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Lab2_8
+namespace Lab3_6
 {
     public class BrowserBehavior
     {
