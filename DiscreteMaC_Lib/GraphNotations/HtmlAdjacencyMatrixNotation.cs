@@ -31,11 +31,11 @@ namespace DiscreteMaC_Lib.GraphNotations
         public override string ConvertFromGrapch(Graph<Edge> InitialGraph)
         {
             List<Point> points = (InitialGraph.ListPoint.Keys.ToList());
-            points.Sort((i1, i2) => { return i1.ID.CompareTo(i2.ID); });
+            points.Sort((i1, i2) => { return i1.Name.CompareTo(i2.Name); });
             StringBuilder HtmlStringBuilder;
             try
             {
-                int fileLength = points.Select(i1 => i1.ID.Length).Aggregate((i1, i2) => i1 + i2) * 2; // Double length (row and columns) names of points 
+                int fileLength = points.Select(i1 => i1.Name.Length).Aggregate((i1, i2) => i1 + i2) * 2; // Double length (row and columns) names of points 
                 fileLength += 126; // <!DOCTYPE HTML><html><head><meta charset =\"utf-8\"></head><body><table border = "1"><caption></caption></table></body></html>
                 fileLength += InitialGraph.GraphName.Length; // Plus Graph name
                 fileLength += ((InitialGraph.ListPoint.Count + 2) * (InitialGraph.ListPoint.Count + 1)) * 9;// Count <tr></tr>, <th></th>, <td></td>
@@ -51,7 +51,7 @@ namespace DiscreteMaC_Lib.GraphNotations
             if (HtmlStringBuilder == null)
                 HtmlStringBuilder = new StringBuilder();
             HtmlStringBuilder.AppendFormat("<!DOCTYPE HTML><html><head><meta charset =\"utf-8\"></head><body><table border = \"1\"><caption>{0}</caption>", InitialGraph.GraphName);
-            HtmlStringBuilder.AppendFormat("<tr><th></th><th>{0}</th></tr>",String.Join("</th><th>", points.Select(i1 => i1.ID)));
+            HtmlStringBuilder.AppendFormat("<tr><th></th><th>{0}</th></tr>",String.Join("</th><th>", points.Select(i1 => i1.Name)));
 
             byte[,] matrix = new byte[points.Count, points.Count];
             foreach (Edge e in InitialGraph.ListEdges.Keys)

@@ -28,7 +28,7 @@ namespace DiscreteMaC_Lib.Graphes
 
             foreach (Point p in ListTempPoints)
             {
-                OutGraph.AddPoint(new Point(p.ID));
+                OutGraph.AddPoint(new Point(p.Name));
             }
             int i = 0;
             foreach (Edge e in ListTempEdges)
@@ -49,7 +49,7 @@ namespace DiscreteMaC_Lib.Graphes
 
             foreach (Point p in ListTempPoints)
             {
-                OutGraph.AddPoint(new Point(p.ID));
+                OutGraph.AddPoint(new Point(p.Name));
             }
             int i = 0;
             foreach (Edge e in ListTempEdges)
@@ -237,15 +237,15 @@ namespace DiscreteMaC_Lib.Graphes
         public static string GenerateGraphDescription(Graph<Edge> CurrentGraph)
         {
             StringBuilder descriptionBuilder = new StringBuilder(String.Format("{0} = ", CurrentGraph.GraphName));
-            descriptionBuilder.AppendFormat("{{{0}}} – множество вершин", String.Join(", ", CurrentGraph.ListPoint.Keys.Select(i1 => i1.ID)));
+            descriptionBuilder.AppendFormat("{{{0}}} – множество вершин", String.Join(", ", CurrentGraph.ListPoint.Keys.Select(i1 => i1.Name)));
 
             foreach (Point p in CurrentGraph.ListPoint.Keys)
             {
-                IEnumerable<string> listEndPointsIDs = CurrentGraph.ListEdges.Where(i1 => i1.Key.StartPoint == p).Select(i1 => i1.Key.EndPoint.ID);
+                IEnumerable<string> listEndPointsIDs = CurrentGraph.ListEdges.Where(i1 => i1.Key.StartPoint == p).Select(i1 => i1.Key.EndPoint.Name);
                 if (listEndPointsIDs.Count() > 0)
                 {
                     descriptionBuilder.Append(", ");
-                    descriptionBuilder.AppendFormat("Г({0}) = {{ {1} }}", new string[] { p.ID, String.Join(", ", listEndPointsIDs) });
+                    descriptionBuilder.AppendFormat("Г({0}) = {{ {1} }}", new string[] { p.Name, String.Join(", ", listEndPointsIDs) });
                 }
             }
 

@@ -26,11 +26,11 @@ namespace DiscreteMaC_Lib.Graphes
             if (ListPoint.ContainsKey(GraphEdge.StartPoint) && ListPoint.ContainsKey(GraphEdge.EndPoint))
             {
                 // Переназначаем вершины графа на те, что точно содержаться в списке графа.
-                GraphEdge.StartPoint = ListPoint.Keys.First(i1 => i1.ID == GraphEdge.StartPoint.ID);
-                GraphEdge.EndPoint = ListPoint.Keys.First(i1 => i1.ID == GraphEdge.EndPoint.ID);
+                GraphEdge.StartPoint = ListPoint.Keys.First(i1 => i1.Name == GraphEdge.StartPoint.Name);
+                GraphEdge.EndPoint = ListPoint.Keys.First(i1 => i1.Name == GraphEdge.EndPoint.Name);
 
                 base._ListEdges.Add(GraphEdge, GraphEdge.Name);
-                (ListPoint.Keys.First(i1 => i1.ID == GraphEdge.StartPoint.ID)).AddEdge(GraphEdge);
+                (ListPoint.Keys.First(i1 => i1.Name == GraphEdge.StartPoint.Name)).AddEdge(GraphEdge);
             }
             else throw new Exception("Graph not contains this combination of points: " + GraphEdge.StartPoint.ToString() + ", " + GraphEdge.EndPoint.ToString());
         }

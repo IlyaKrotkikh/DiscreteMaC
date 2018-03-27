@@ -15,7 +15,7 @@ namespace DiscreteMaC_Lib.Graphes.Points.PointComparers
                 return true;
             else if (point1 == null | point2 == null)
                 return false;
-            else if (point1.ID == point2.ID)
+            else if (point1.Name == point2.Name)
                 return true;
             else
                 return false;

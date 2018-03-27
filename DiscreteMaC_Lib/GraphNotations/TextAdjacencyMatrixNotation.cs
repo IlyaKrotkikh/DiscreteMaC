@@ -33,9 +33,9 @@ namespace DiscreteMaC_Lib.GraphNotations
             string content = InitialGraph.GraphName + " | ";
 
             List<Point> points = (InitialGraph.ListPoint.Keys.ToList());
-            points.Sort((i1, i2) => { return i1.ID.CompareTo(i2.ID); });
+            points.Sort((i1, i2) => { return i1.Name.CompareTo(i2.Name); });
 
-            content = String.Concat(content, String.Join(" | ", points.Select(i1 => i1.ID)));
+            content = String.Concat(content, String.Join(" | ", points.Select(i1 => i1.Name)));
             content = String.Concat(content, "\n");
 
             byte[,] matrix = new byte[points.Count, points.Count];
