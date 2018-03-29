@@ -14,8 +14,10 @@ namespace DiscreteMaC_Lib.Graphes.Points
     {
         private Dictionary<Edge, string> _ListEdges { get; set; }
 
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
         public ReadOnlyDictionary<Edge, string> ListEdges { get; set; }
+
+        protected Point() { }
 
         public Point(string Name)
         {
