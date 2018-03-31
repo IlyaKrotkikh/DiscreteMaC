@@ -11,7 +11,7 @@ using DiscreteMaC_Lib.Graphes.Edges;
 
 namespace DiscreteMaC_Lib.Graphes
 {
-    public abstract class Graph<EdgeType> where EdgeType: Edge
+    public abstract class Graph<EdgeType> where EdgeType: AbstractEdge<Point>
     {
         protected Dictionary<Point, ReadOnlyDictionary<Edge, string>> _ListPoint { get; set; }
         protected Dictionary<EdgeType, string> _ListEdges { get; set; }
@@ -20,7 +20,7 @@ namespace DiscreteMaC_Lib.Graphes
         public ReadOnlyDictionary<EdgeType, string> ListEdges { get; private set; }
         public string GraphName { get; set; }
 
-        public Graph(string GraphName, IEqualityComparer<Edge> EdgeComparer)
+        public Graph(string GraphName, IEqualityComparer<EdgeType> EdgeComparer)
         {
             this.GraphName = GraphName;
 
@@ -32,6 +32,6 @@ namespace DiscreteMaC_Lib.Graphes
         }
 
         public abstract void AddPoint(Point GraphPoint);    
-        public abstract void AddEdge(Edge GraphEdge);
+        public abstract void AddEdge(EdgeType GraphEdge);
     }
 }
