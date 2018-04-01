@@ -39,7 +39,7 @@ namespace DiscreteMaC_Lib.Graphes
 
             return OutGraph;
         }
-        public static IGraphBasics<Point,Edge> DirectedGraphUnion(IGraphBasics<Point, Edge> g1, IGraphBasics<Point, Edge> g2)
+        public static DirectedGraph DirectedGraphUnion(IGraphBasics<Point, Edge> g1, IGraphBasics<Point, Edge> g2)
         {
             string graphName = g1.GraphName + "∪" + g2.GraphName;
             DirectedGraph OutGraph = new DirectedGraph(graphName);
