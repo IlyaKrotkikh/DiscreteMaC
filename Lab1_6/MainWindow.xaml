@@ -1,0 +1,91 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab1_6"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Lab1_6.MainWindow"
+        mc:Ignorable="d"
+        Title="Лаораторная 1, Вариант 6" Height="500" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0"  Grid.Column="0" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Граф :"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Вершин: "/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="2" Text="{Binding G1_Name}"/>
+            <ComboBox Grid.Column="1" Grid.Row="1" Margin="2" Text="{Binding G1_Points}">
+                <System:Int32>2</System:Int32>
+                <System:Int32>3</System:Int32>
+                <System:Int32>4</System:Int32>
+                <System:Int32>5</System:Int32>
+                <System:Int32>6</System:Int32>
+                <System:Int32>7</System:Int32>
+            </ComboBox>
+            <Button x:Name="BtnGenGraphG1" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="2" Click="BtnGenGraphG1_Click">
+                <TextBlock Text="Задать граф"/>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Граф :"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Вершин: "/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="2" Text="{Binding G2_Name}"/>
+            <ComboBox Grid.Column="1" Grid.Row="1" Margin="2" Text="{Binding G2_Points}">
+                <System:Int32>2</System:Int32>
+                <System:Int32>3</System:Int32>
+                <System:Int32>4</System:Int32>
+                <System:Int32>5</System:Int32>
+                <System:Int32>6</System:Int32>
+                <System:Int32>7</System:Int32>
+            </ComboBox>
+            <Button x:Name="BtnGenGraphG2" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="2" Click="BtnGenGraphG2_Click">
+                <TextBlock Text="Задать граф"/>
+            </Button>
+        </Grid>
+        <WebBrowser x:Name="BrowserG1" Grid.Row="1" Grid.Column="0" Margin="2" local:BrowserBehavior.Html="{Binding HtmlDataG1}"/>
+        <WebBrowser x:Name="BrowserG2" Grid.Row="1" Grid.Column="1" Margin="2" local:BrowserBehavior.Html="{Binding HtmlDataG2}"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Text="Ответ: Матрица G1 U G2"/>
+        <WebBrowser x:Name="BrowserGOut" Grid.Row="3" Grid.Column="0" Margin="2" local:BrowserBehavior.Html="{Binding HtmlDataGOut}"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Margin="5" Text="Вершины с мин. полустепенью исхода:" TextWrapping="Wrap"/>
+        <ListBox Grid.Row="3"  Grid.Column="1" Margin="5" ItemsSource="{Binding TaskAnswer}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Key}"/>
+                        <TextBlock Text=" ("/>
+                        <TextBlock Text="{Binding Value}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
