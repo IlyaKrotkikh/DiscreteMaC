@@ -79,9 +79,9 @@ namespace Lab1
         public int G2_Edges { get; set; }
         public string G2_Name { get; set; }
 
-        public Graph<Edge> GraphG1 { get; set; }
-        public Graph<Edge> GraphG2 { get; set; }
-        public Graph<Edge> GraphGOut { get; set; }
+        public DirectedGraph GraphG1 { get; set; }
+        public DirectedGraph GraphG2 { get; set; }
+        public DirectedGraph GraphGOut { get; set; }
 
         public int TaskAnswer
         {
@@ -130,7 +130,7 @@ namespace Lab1
             GraphG2 = GraphUtils.GenerateRandomDirectedGraph(G2_Name, G2_Points, G2_Edges);
             GraphGOut = GraphUtils.DirectedGraphIntersection(GraphG1, GraphG2);
 
-            ListPointsGrapchOut = new ObservableCollection<DiscreteMaC_Lib.Graphes.Points.Point>(GraphGOut.ListPoint.Keys);
+            ListPointsGrapchOut = new ObservableCollection<DiscreteMaC_Lib.Graphes.Points.Point>(GraphGOut.PointCollection);
 
             HtmlDataG1 = CurrentNotation.ConvertFromGrapch(GraphG1);
             HtmlDataG2 = CurrentNotation.ConvertFromGrapch(GraphG2);
@@ -146,12 +146,12 @@ namespace Lab1
         }
 
 
-        private int CalcIncidentEdges(Graph<Edge> InitialGraph, DiscreteMaC_Lib.Graphes.Points.Point SomePoint)
+        private int CalcIncidentEdges(DirectedGraph InitialGraph, DiscreteMaC_Lib.Graphes.Points.Point SomePoint)
         {
             if (InitialGraph == null || SomePoint == null)
                 return 0;
 
-            IEnumerable<Edge> ListEdges = InitialGraph.ListEdges.Keys.ToList();
+            IEnumerable<Edge> ListEdges = InitialGraph.EdgeCollection;
             ListEdges = ListEdges.Where(i1 => i1.StartPoint.Equals(SomePoint) || i1.EndPoint.Equals(SomePoint));
             return ListEdges.Count();
         }
@@ -168,7 +168,7 @@ namespace Lab1
         {
             GraphGOut = GraphUtils.DirectedGraphIntersection(GraphG1, GraphG2);
 
-            ListPointsGrapchOut = new ObservableCollection<DiscreteMaC_Lib.Graphes.Points.Point>(GraphGOut.ListPoint.Keys);
+            ListPointsGrapchOut = new ObservableCollection<DiscreteMaC_Lib.Graphes.Points.Point>(GraphGOut.PointCollection);
 
             HtmlDataGOut = CurrentNotation.ConvertFromGrapch(GraphGOut);
         }
