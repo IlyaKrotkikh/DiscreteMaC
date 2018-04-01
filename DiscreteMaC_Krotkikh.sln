@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1", "Lab1\Lab1.csproj", "{7895A7BC-5634-4D2C-98AA-A3F35E309841}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscreteMaC_Lib", "DiscreteMaC_Lib\DiscreteMaC_Lib.csproj", "{23552BB2-CF25-4DD1-813B-7E184119CFB9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console_Test", "Console_Test\Console_Test.csproj", "{DC2E51FE-9A16-4172-AD8F-0ABAD586E62A}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7895A7BC-5634-4D2C-98AA-A3F35E309841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7895A7BC-5634-4D2C-98AA-A3F35E309841}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7895A7BC-5634-4D2C-98AA-A3F35E309841}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7895A7BC-5634-4D2C-98AA-A3F35E309841}.Release|Any CPU.Build.0 = Release|Any CPU
 		{23552BB2-CF25-4DD1-813B-7E184119CFB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{23552BB2-CF25-4DD1-813B-7E184119CFB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23552BB2-CF25-4DD1-813B-7E184119CFB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
