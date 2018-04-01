@@ -41,10 +41,13 @@ namespace DiscreteMaC_Lib.GraphNotations
             HtmlStringBuilder.AppendFormat("<tr><th></th><th>{0}</th></tr>", String.Join("</th><th>", edges.Select(i1 => i1.Name)));
 
             short[,] matrix = new short[points.Count, edges.Count];
-            foreach (AbstractEdge<Point> e in InitialGraph.EdgeCollection)
+            foreach (var e in edges)
             {
-                matrix[points.IndexOf(e.StartPoint), edges.IndexOf(e)] += 1;
-                matrix[points.IndexOf(e.EndPoint), edges.IndexOf(e)] -= 1;
+                int eid = edges.IndexOf(e);
+                int esp = points.IndexOf(e.StartPoint);
+                int eep = points.IndexOf(e.EndPoint);
+                matrix[esp, eid] += 1;
+                matrix[eep, eid] -= 1;
             }
 
             for (int i = 0; i < matrix.GetLength(0); i++)

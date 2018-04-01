@@ -28,7 +28,7 @@ namespace DiscreteMaC_Lib.Graphes.Edges
             this.EndPoint = EdgeToCopy.EndPoint;
         }
 
-        public bool Equals(AbstractEdge<PointType> other)
+        public virtual bool Equals(AbstractEdge<PointType> other)
         {
             AbstractEdgeEqualityComparer<PointType> defComperer = new AbstractEdgeEqualityComparer<PointType>();
             return defComperer.Equals(this, other);
