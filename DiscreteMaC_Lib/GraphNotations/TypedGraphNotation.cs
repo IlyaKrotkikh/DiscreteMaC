@@ -10,10 +10,10 @@ using DiscreteMaC_Lib.Graphes.Points;
 
 namespace DiscreteMaC_Lib.GraphNotations
 {
-    [ValueConversion(typeof(Graph<AbstractEdge<Point>>), typeof(object))]
+    [ValueConversion(typeof(IGraphBasics<Point,AbstractEdge<Point>>), typeof(object))]
     public abstract class TypedGraphNotation<CustomType>: GraphNotation
     {
-        public abstract CustomType ConvertFromGrapch(Graph<AbstractEdge<Point>> InitialGraph) ;
-        public abstract Graph<Edge> ConvertToGrapch(CustomType InitialGraph);
+        public abstract CustomType ConvertFromGrapch(IGraphBasics<Point,AbstractEdge<Point>> InitialGraph) ;
+        public abstract object ConvertToGrapch(CustomType InitialGraph);
     }
 }

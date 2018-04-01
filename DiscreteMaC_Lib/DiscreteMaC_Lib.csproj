@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphes\AbstractGraph.cs" />
     <Compile Include="Graphes\Edges\AbstarctEdge.cs" />
     <Compile Include="Graphes\Edges\Edge.cs" />
     <Compile Include="Graphes\Edges\EdgeComparers\NonDirectedEdgeEqualityComparer.cs" />
@@ -51,7 +52,8 @@
     <Compile Include="Graphes\Edges\EdgePointID.cs" />
     <Compile Include="Graphes\Graph.cs" />
     <Compile Include="Graphes\GraphUtils.cs" />
-    <Compile Include="Graphes\OrientedGraph.cs" />
+    <Compile Include="Graphes\IGraphBasics.cs" />
+    <Compile Include="Graphes\DirectedGraph.cs" />
     <Compile Include="Graphes\Paths\AbstractPath.cs" />
     <Compile Include="Graphes\Paths\Path.cs" />
     <Compile Include="Graphes\Paths\PathComparers\PathEqualityComparer.cs" />
