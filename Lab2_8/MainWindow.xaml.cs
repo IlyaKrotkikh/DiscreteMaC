@@ -58,7 +58,7 @@ namespace Lab2_8
             }
         }
 
-        public Graph<Edge> GraphGAjacM { get; set; }
+        public DirectedGraph GraphGAjacM { get; set; }
         public int GAjacM_Points { get; set; }
         public int GAjacM_Edges { get; set; }
         public string GAjacM_Name { get; set; }
