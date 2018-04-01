@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 
 namespace DiscreteMaC_Lib.Graphes.Points.PointComparers
 {
-    class PointEqualityComparer : IEqualityComparer<Point>
+    class PointWithIDEqualityComparer : IEqualityComparer<PointWithID>
     {
-        public bool Equals(Point point1, Point point2)
+        public bool Equals(PointWithID point1, PointWithID point2)
         {
             if (point2 == null && point1 == null)
                 return true;
             else if (point1 == null | point2 == null)
                 return false;
-            else if (point1.Name == point2.Name)
+            else if (point1.ID == point2.ID && point1.NamePrefix == point2.NamePrefix)
                 return true;
             else
                 return false;
         }
 
-        public int GetHashCode(Point obj)
+        public int GetHashCode(PointWithID obj)
         {
             return 0;
             //return obj.GetHashCode();

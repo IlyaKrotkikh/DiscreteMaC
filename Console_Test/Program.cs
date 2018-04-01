@@ -16,14 +16,14 @@ namespace Console_Test
     {
         static bool stop;
         static TextAdjacencyMatrixNotation notation;
-        static Graph<Edge> TestGrapch1;
+        static AbstractGraph<Point,Edge> TestGrapch1;
 
         static void Main(string[] args)
         {
             stop = false;
             notation = new TextAdjacencyMatrixNotation();
 
-            TestGrapch1 = new OrientedGraph("g1");
+            TestGrapch1 = new DirectedGraph("g1");
             Point x1 = new Point("x1");
             TestGrapch1.AddPoint(x1);
             Point x2 = new Point("x2");

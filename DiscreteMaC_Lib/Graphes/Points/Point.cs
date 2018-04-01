@@ -14,24 +14,26 @@ namespace DiscreteMaC_Lib.Graphes.Points
     {
         private Dictionary<Edge, string> _ListEdges { get; set; }
 
-        public string ID { get; set; }
+        public virtual string Name { get; set; }
         public ReadOnlyDictionary<Edge, string> ListEdges { get; set; }
 
-        public Point(string ID)
+        protected Point() { }
+
+        public Point(string Name)
         {
-            this.ID = ID;
+            this.Name = Name;
             _ListEdges = new Dictionary<Edge, string>(new PointEdgeEqualityComparer(this));
             ListEdges = new ReadOnlyDictionary<Edge, string>(_ListEdges);
         }
 
         public void AddEdge(Edge EdgeToPoint)
         {
-            _ListEdges.Add(EdgeToPoint, EdgeToPoint.EndPoint.ID);
+            _ListEdges.Add(EdgeToPoint, EdgeToPoint.EndPoint.Name);
         }
 
         public override string ToString()
         {
-            return ID;
+            return Name;
         }
 
         public bool Equals(Point other)

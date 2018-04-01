@@ -11,27 +11,45 @@ using DiscreteMaC_Lib.Graphes.Edges;
 
 namespace DiscreteMaC_Lib.Graphes
 {
-    public abstract class Graph<EdgeType> where EdgeType: Edge
-    {
-        protected Dictionary<Point, ReadOnlyDictionary<Edge, string>> _ListPoint { get; set; }
-        protected Dictionary<EdgeType, string> _ListEdges { get; set; }
+    //public abstract class Graph<PointType, EdgeType>: IGraphBasics<PointType,EdgeType>
+    //    where PointType: Point
+    //    where EdgeType: AbstractEdge<PointType>
+    //{
+    //    protected Dictionary<PointType, ReadOnlyDictionary<EdgeType, string>> _ListPoint { get; set; }
+    //    protected Dictionary<EdgeType, string> _ListEdges { get; set; }
 
-        public ReadOnlyDictionary<Point, ReadOnlyDictionary<Edge, string>> ListPoint { get; private set; }
-        public ReadOnlyDictionary<EdgeType, string> ListEdges { get; private set; }
-        public string GraphName { get; set; }
+    //    public ReadOnlyDictionary<PointType, ReadOnlyDictionary<EdgeType, string>> ListPoint { get; private set; }
+    //    public ReadOnlyDictionary<EdgeType, string> ListEdges { get; private set; }
+    //    public string GraphName { get; set; }
 
-        public Graph(string GraphName, IEqualityComparer<Edge> EdgeComparer)
-        {
-            this.GraphName = GraphName;
+    //    public IEnumerable<PointType> PointCollection
+    //    {
+    //        get
+    //        {
+    //            throw new NotImplementedException();
+    //        }
+    //    }
 
-            _ListPoint = new Dictionary<Point, ReadOnlyDictionary<Edge, string>>(new PointEqualityComparer());
-            _ListEdges = new Dictionary<EdgeType, string>(EdgeComparer);
+    //    public IEnumerable<EdgeType> EdgeCollection
+    //    {
+    //        get
+    //        {
+    //            throw new NotImplementedException();
+    //        }
+    //    }
 
-            ListPoint = new ReadOnlyDictionary<Point, ReadOnlyDictionary<Edge, string>>(_ListPoint);
-            ListEdges = new ReadOnlyDictionary<EdgeType, string>(_ListEdges);
-        }
+    //    public Graph(string GraphName, IEqualityComparer<EdgeType> EdgeComparer)
+    //    {
+    //        this.GraphName = GraphName;
 
-        public abstract void AddPoint(Point GraphPoint);    
-        public abstract void AddEdge(Edge GraphEdge);
-    }
+    //        _ListPoint = new Dictionary<PointType, ReadOnlyDictionary<EdgeType, string>>(new PointEqualityComparer());
+    //        _ListEdges = new Dictionary<EdgeType, string>(EdgeComparer);
+
+    //        ListPoint = new ReadOnlyDictionary<PointType, ReadOnlyDictionary<EdgeType, string>>(_ListPoint);
+    //        ListEdges = new ReadOnlyDictionary<EdgeType, string>(_ListEdges);
+    //    }
+
+    //    public abstract void AddPoint(Point GraphPoint);    
+    //    public abstract void AddEdge(EdgeType GraphEdge);
+    //}
 }

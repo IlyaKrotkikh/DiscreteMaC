@@ -11,14 +11,14 @@ using System.Windows.Data;
 
 namespace DiscreteMaC_Lib.GraphNotations
 {
-    [ValueConversion(typeof(Graph<Edge>), typeof(string))]
+    [ValueConversion(typeof(IGraphBasics<Point, AbstractEdge<Point>>), typeof(string))]
     public class TextAdjacencyMatrixNotation : TypedGraphNotation<string>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 throw new Exception("Converted value is null");
-            return ConvertFromGrapch(value as Graph<Edge>);
+            return ConvertFromGrapch(value as IGraphBasics<Point, AbstractEdge<Point>>);
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -28,18 +28,18 @@ namespace DiscreteMaC_Lib.GraphNotations
             return ConvertToGrapch(value as string);
         }
 
-        public override string ConvertFromGrapch(Graph<Edge> InitialGraph)
+        public override string ConvertFromGrapch(IGraphBasics<Point, AbstractEdge<Point>> InitialGraph)
         {
             string content = InitialGraph.GraphName + " | ";
 
-            List<Point> points = (InitialGraph.ListPoint.Keys.ToList());
-            points.Sort((i1, i2) => { return i1.ID.CompareTo(i2.ID); });
+            List<Point> points = (InitialGraph.PointCollection.ToList());
+            points.Sort((i1, i2) => { return i1.Name.CompareTo(i2.Name); });
 
-            content = String.Concat(content, String.Join(" | ", points.Select(i1 => i1.ID)));
+            content = String.Concat(content, String.Join(" | ", points.Select(i1 => i1.Name)));
             content = String.Concat(content, "\n");
 
             byte[,] matrix = new byte[points.Count, points.Count];
-            foreach (Edge e in InitialGraph.ListEdges.Keys)
+            foreach (AbstractEdge<Point> e in InitialGraph.EdgeCollection)
             {
                 matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] += 1;
             }
@@ -57,7 +57,7 @@ namespace DiscreteMaC_Lib.GraphNotations
             return content;
         }
 
-        public override Graph<Edge> ConvertToGrapch(string InitialGraph)
+        public override object ConvertToGrapch(string InitialGraph)
         {
             throw new NotImplementedException();
         }

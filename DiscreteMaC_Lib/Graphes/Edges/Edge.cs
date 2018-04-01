@@ -8,30 +8,22 @@ using DiscreteMaC_Lib.Graphes.Edges.EdgeComparers;
 
 namespace DiscreteMaC_Lib.Graphes.Edges
 {
-    public class  Edge : IEquatable<Edge>
+    public class  Edge : AbstractEdge<Point>, IEquatable<Edge>
     {
-        public string Name;
-        public Point StartPoint { get; set; }
-        public Point EndPoint { get; set; }
-
-        public Edge(string Name, Point StartPoint, Point EndPoint)
-        {
-            this.Name = Name;
-            this.StartPoint = StartPoint;
-            this.EndPoint = EndPoint;
-        }
-
-        public Edge(string Name, Edge EdgeToCopy)
-        {
-            this.Name = Name;
-            StartPoint = EdgeToCopy.StartPoint;
-            EndPoint = EdgeToCopy.EndPoint;
-        }
+        public Edge(string Name, Point StartPoint, Point EndPoint) : base(Name, StartPoint, EndPoint) { }
+        public Edge(string Name, Edge EdgeToCopy) : base(Name, EdgeToCopy) { }
 
         public bool Equals(Edge other)
         {
             DirectedEdgeEqualityComparer defComperer = new DirectedEdgeEqualityComparer();
             return defComperer.Equals(this, other);
+        }
+
+        public override bool Equals(AbstractEdge<Point> other)
+        {
+            if (other is Edge)
+                return this.Equals((other as Edge));
+            else return base.Equals(other);
         }
     }
 }
