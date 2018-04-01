@@ -25,7 +25,7 @@ namespace Lab3_6
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private Graph<Edge> _MainGraph;
+        private DirectedGraph _MainGraph;
         private int _MainGrapPointsCount;
         private string _MainGraphName;
         private ObservableCollection<DiscreteMaC_Lib.Graphes.Points.Point> _ListMainGraphPoints;
@@ -34,7 +34,7 @@ namespace Lab3_6
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Graph<Edge> MainGraph
+        public DirectedGraph MainGraph
         {
             get
             {
@@ -132,7 +132,7 @@ namespace Lab3_6
             MainGraph = GraphUtils.GenerateRandomDirectedGraph(MainGraphName, MainGraphPointsCount, MainGraphPointsCount -1);
             TaskAnswer = GraphUtils.IsDirectedTree(MainGraph);
 
-            ListMainGraphPoints = new ObservableCollection<DiscreteMaC_Lib.Graphes.Points.Point>(MainGraph.ListPoint.Keys);
+            ListMainGraphPoints = new ObservableCollection<DiscreteMaC_Lib.Graphes.Points.Point>(MainGraph.PointCollection);
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -150,7 +150,7 @@ namespace Lab3_6
         {
             try
             {
-                Edge newEdge = new Edge(MainGraphName + _MainGraph.ListEdges.Count().ToString(), SelectedStartPoint, SelectedEndPoint);
+                Edge newEdge = new Edge(MainGraphName + _MainGraph.EdgeCollection.Count().ToString(), SelectedStartPoint, SelectedEndPoint);
                 MainGraph.AddEdge(newEdge);
                 NotifyPropertyChanged("MainGraph");
                 TaskAnswer = GraphUtils.IsDirectedTree(MainGraph);
