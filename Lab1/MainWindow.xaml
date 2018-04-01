@@ -1,0 +1,81 @@
+﻿<Window x:Class="Lab1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="420" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+            <TextBlock Text="Лабораторная работа 1, Кротких." FontSize="24"/>
+        </Border>
+        <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding TaskText}" FontWeight="Bold" TextWrapping="Wrap" Margin="5"/>
+        <Grid Grid.Row="2"  Grid.Column="0" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Название графа"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Кол-во вершин"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Кол-во ребер"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="2" Text="{Binding G1_Name}"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Margin="2" Text="{Binding G1_Points}"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Margin="2" Text="{Binding G1_Edges}"/>
+            <Button x:Name="BtnGenGraphG1" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="2" Click="BtnGenGraphG1_Click">
+                <TextBlock Text="Задать граф"/>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="2"  Grid.Column="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Название графа"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Кол-во вершин"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Кол-во ребер"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="2" Text="{Binding G2_Name}"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Margin="2" Text="{Binding G2_Points}"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Margin="2" Text="{Binding G2_Edges}"/>
+            <Button x:Name="BtnGenGraphG2" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="2" Click="BtnGenGraphG2_Click">
+                <TextBlock Text="Задать граф"/>
+            </Button>
+        </Grid>
+        <StackPanel Grid.Row="2" Grid.Column="2" Margin="5">
+            <Button x:Name="BtnGraphGOutRebuild" Margin="2" Click="BtnGraphGOutRebuild_Click">
+                <TextBlock Text="Пересечение графов"/>
+            </Button>
+            <TextBlock Text="Кол-во дуг, инцидентных вершине:" TextWrapping="Wrap" Margin="2"/>
+            <StackPanel Orientation="Horizontal" Margin=" 2">
+                <ComboBox x:Name="CmbGraphGOut" Width="100" Margin="0,2,10,2" ItemsSource="{Binding ListPointsGrapchOut}" SelectionChanged="CmbGraphGOut_SelectionChanged"/>
+                <TextBox Text="{Binding TaskAnswer}" Width="40" Margin="2" FontWeight="Bold" IsReadOnly="True"/>
+            </StackPanel>
+        </StackPanel>
+        <WebBrowser x:Name="BrowserG1" Grid.Row="3" Grid.Column="0" local:BrowserBehavior.Html="{Binding HtmlDataG1}"/>
+        <WebBrowser x:Name="BrowserG2" Grid.Row="3" Grid.Column="1" local:BrowserBehavior.Html="{Binding HtmlDataG2}"/>
+        <WebBrowser x:Name="BrowserGOut" Grid.Row="3" Grid.Column="2" local:BrowserBehavior.Html="{Binding HtmlDataGOut}"/>
+    </Grid>
+</Window>
