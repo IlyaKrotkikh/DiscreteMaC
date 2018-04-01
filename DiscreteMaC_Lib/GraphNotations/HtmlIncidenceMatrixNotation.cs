@@ -11,14 +11,14 @@ using System.Windows.Data;
 
 namespace DiscreteMaC_Lib.GraphNotations
 {
-    [ValueConversion(typeof(Graph<Edge>), typeof(string))]
+    [ValueConversion(typeof(IGraphBasics<Point,AbstractEdge<Point>>), typeof(string))]
     public class HtmlIncidenceMatrixNotation : TypedGraphNotation<string>, IValueConverter
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 throw new Exception("Converted value is null");
-            return ConvertFromGrapch(value as Graph<Edge>);
+            return ConvertFromGrapch(value as IGraphBasics<Point, AbstractEdge<Point>>);
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -28,11 +28,11 @@ namespace DiscreteMaC_Lib.GraphNotations
             return ConvertToGrapch(value as string);
         }
 
-        public override string ConvertFromGrapch(Graph<Edge> InitialGraph)
+        public override string ConvertFromGrapch(IGraphBasics<Point, AbstractEdge<Point>> InitialGraph)
         {
-            List<Point> points = (InitialGraph.ListPoint.Keys.ToList());
-            points.Sort((i1, i2) => { return i1.ID.CompareTo(i2.ID); });
-            List<Edge> edges = (InitialGraph.ListEdges.Keys.ToList());
+            List<Point> points = (InitialGraph.PointCollection.ToList());
+            points.Sort((i1, i2) => { return i1.Name.CompareTo(i2.Name); });
+            List<AbstractEdge<Point>> edges = (InitialGraph.EdgeCollection.ToList());
             edges.Sort((i1, i2) => { return i1.Name.CompareTo(i2.Name); });
             StringBuilder HtmlStringBuilder;
 
@@ -41,7 +41,7 @@ namespace DiscreteMaC_Lib.GraphNotations
             HtmlStringBuilder.AppendFormat("<tr><th></th><th>{0}</th></tr>", String.Join("</th><th>", edges.Select(i1 => i1.Name)));
 
             short[,] matrix = new short[points.Count, edges.Count];
-            foreach (Edge e in InitialGraph.ListEdges.Keys)
+            foreach (AbstractEdge<Point> e in InitialGraph.EdgeCollection)
             {
                 matrix[points.IndexOf(e.StartPoint), edges.IndexOf(e)] += 1;
                 matrix[points.IndexOf(e.EndPoint), edges.IndexOf(e)] -= 1;
@@ -61,7 +61,7 @@ namespace DiscreteMaC_Lib.GraphNotations
             return HtmlStringBuilder.ToString();
         }
 
-        public override Graph<Edge> ConvertToGrapch(string InitialGraph)
+        public override object ConvertToGrapch(string InitialGraph)
         {
             throw new NotImplementedException();
         }

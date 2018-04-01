@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DiscreteMaC_Lib.Graphes.Paths.PathComparers
 {
-    public class PathEqualityComparer<EdgeType, PointType> : IEqualityComparer<AbstractPath<EdgeType, PointType>> where EdgeType: Edge where PointType : Point
+    public class PathEqualityComparer<EdgeType, PointType> : IEqualityComparer<AbstractPath<EdgeType, PointType>> where EdgeType: AbstractEdge<Point> where PointType : Point
     {
         public bool Equals(AbstractPath<EdgeType, PointType> path1, AbstractPath<EdgeType, PointType> path2)
         {
