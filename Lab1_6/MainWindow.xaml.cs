@@ -71,15 +71,15 @@ namespace Lab1_6
             }
         }
 
-        public Graph<Edge> GraphG1 { get; set; }
+        public DirectedGraph GraphG1 { get; set; }
         public int G1_Points { get; set; }
         public string G1_Name { get; set; }
 
-        public Graph<Edge> GraphG2 { get; set; }
+        public DirectedGraph GraphG2 { get; set; }
         public int G2_Points { get; set; }
         public string G2_Name { get; set; }
 
-        public Graph<Edge> GraphGOut { get; set; }
+        public DirectedGraph GraphGOut { get; set; }
 
         public ObservableCollection<KeyValuePair<DiscreteMaC_Lib.Graphes.Points.Point, int>> TaskAnswer
         {
