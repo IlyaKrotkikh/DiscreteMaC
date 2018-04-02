@@ -10,7 +10,7 @@ namespace DiscreteMaC_Lib.Graphes
 {
     public interface IGraphBasics<out PointType, out EdgeType>
         where PointType:Point
-        where EdgeType : AbstractEdge<PointType>
+        where EdgeType : IEdgeBasics<PointType>
     {
         string GraphName { get; set; }
         IEnumerable<PointType> PointCollection { get; }

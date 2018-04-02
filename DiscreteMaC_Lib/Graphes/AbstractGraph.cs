@@ -11,7 +11,7 @@ namespace DiscreteMaC_Lib.Graphes
 {
     public abstract class AbstractGraph<PointType, EdgeType> : IGraphBasics<PointType, EdgeType>
         where PointType : Point
-        where EdgeType : AbstractEdge<PointType>
+        where EdgeType : IEdgeBasics<PointType>
     {
         protected virtual HashSet<PointType> HashSetPoints { get; set; }
         protected virtual HashSet<EdgeType> HashSetEdges { get; set; }
@@ -40,7 +40,7 @@ namespace DiscreteMaC_Lib.Graphes
             HashSetEdges = new HashSet<EdgeType>(EdgeComparer);
         }
 
-        public abstract void AddPoint(PointType GraphPoint);
-        public abstract void AddEdge(EdgeType GraphEdge);
+        public abstract bool AddPoint(PointType GraphPoint);
+        public abstract bool AddEdge(EdgeType GraphEdge);
     }
 }

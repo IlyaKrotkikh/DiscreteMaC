@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DiscreteMaC_Lib.Graphes.Edges
 {
-    public class AbstractEdge<PointType> : IEquatable<AbstractEdge<PointType>> where PointType : Point
+    public class AbstractEdge<PointType> : IEquatable<AbstractEdge<PointType>>, IEdgeBasics<PointType> where PointType : Point
     {
         public PointType StartPoint { get; set; }
         public PointType EndPoint { get; set; }
