@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graphes\AbstractGraph.cs" />
+    <Compile Include="Graphes\DirectedGraphWithPointID.cs" />
     <Compile Include="Graphes\Edges\AbstarctEdge.cs" />
     <Compile Include="Graphes\Edges\Edge.cs" />
     <Compile Include="Graphes\Edges\EdgeComparers\NonDirectedEdgeEqualityComparer.cs" />
@@ -50,7 +51,7 @@
     <Compile Include="Graphes\Edges\EdgeComparers\AbstractEdgeEqualityComparer.cs" />
     <Compile Include="Graphes\Edges\EdgeComparers\PointEdgeEqualityComparer.cs" />
     <Compile Include="Graphes\Edges\EdgePointID.cs" />
-    <Compile Include="Graphes\Graph.cs" />
+    <Compile Include="Graphes\Edges\IEdgeBasics.cs" />
     <Compile Include="Graphes\GraphUtils.cs" />
     <Compile Include="Graphes\IGraphBasics.cs" />
     <Compile Include="Graphes\DirectedGraph.cs" />
