@@ -29,9 +29,12 @@ namespace DiscreteMaC_Lib.Graphes
                 GraphEdge.StartPoint = PointCollection.First(i1 => i1.Name == GraphEdge.StartPoint.Name);
                 GraphEdge.EndPoint = PointCollection.First(i1 => i1.Name == GraphEdge.EndPoint.Name);
 
-                bool result = base.HashSetEdges.Add(GraphEdge);
-                (PointCollection.First(i1 => i1.Name == GraphEdge.StartPoint.Name)).AddEdge(GraphEdge);
-                return result;
+                if (base.HashSetEdges.Add(GraphEdge))
+                {
+                    (PointCollection.First(i1 => i1.Name == GraphEdge.StartPoint.Name)).AddEdge(GraphEdge);
+                    return true;
+                }
+                else return false;
             }
             else throw new Exception("Graph not contains this combination of points: " + GraphEdge.StartPoint.ToString() + ", " + GraphEdge.EndPoint.ToString());
         }
