@@ -1,0 +1,76 @@
+﻿<Window x:Class="Lab3_8.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab3_8"
+        xmlns:LibDMaC="clr-namespace:DiscreteMaC_Lib.GraphNotations;assembly=DiscreteMaC_Lib"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <LibDMaC:HtmlAdjacencyMatrixNotation x:Key="HtmlAdjacencyMatrixConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+            <TextBlock Text="Лабораторная работа 3, Кротких." FontSize="24"/>
+        </Border>
+        <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding TaskText}" FontWeight="Bold" TextWrapping="Wrap" Margin="5"/>
+        <Grid Grid.Row="2"  Grid.Column="0" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Название графа"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Кол-во вершин"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Кол-во ребер"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="2" Text="{Binding MainGraphName}"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Margin="2" Text="{Binding MainGraphPointCount}"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Margin="2" Text="{Binding MainGraphEdgeCount}"/>
+            <Button x:Name="BtnGenMainGraph" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="2" Click="BtnGenMainGraph_Click">
+                <TextBlock Text="Задать граф"/>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="2"  Grid.Column="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Построить порожденный подграф, включающий вершины с нечетными номерами." TextWrapping="WrapWithOverflow"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Порожденный подграф" TextAlignment="Center" FontWeight="Bold"/>
+        </Grid>
+        <Grid Grid.Row="2"  Grid.Column="2" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Построить остовный подграф, включающий дуги (xi, xj), если (i + j) - четная" TextWrapping="WrapWithOverflow"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Остовный подграф" TextAlignment="Center" FontWeight="Bold" />
+        </Grid>
+        <WebBrowser x:Name="BrowserG1" Grid.Row="3" Grid.Column="0" local:BrowserBehavior.Html="{Binding MainGraph, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
+        <WebBrowser x:Name="BrowserG2" Grid.Row="3" Grid.Column="1" local:BrowserBehavior.Html="{Binding InducedSubgrap, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
+        <WebBrowser x:Name="BrowserGOut" Grid.Row="3" Grid.Column="2" local:BrowserBehavior.Html="{Binding SpanningSubgraph, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
+    </Grid>
+</Window>

@@ -11,19 +11,19 @@ namespace DiscreteMaC_Lib.Graphes.Edges.EdgeComparers
     {
         private Point StartPoint { get; set; }
 
-        public bool Equals(AbstractEdge<PointType> edge1, AbstractEdge<PointType> edge2)
+        public virtual bool Equals(AbstractEdge<PointType> edge1, AbstractEdge<PointType> edge2)
         {
             if (edge2 == null && edge1 == null)
                 return true;
             else if (edge1 == null | edge2 == null)
                 return false;
-            else if (edge1.Equals(edge2.StartPoint) && edge1.EndPoint.Equals(edge2.EndPoint))
+            else if (edge1.StartPoint.Equals(edge2.StartPoint) && edge1.EndPoint.Equals(edge2.EndPoint))
                 return true;
             else
                 return false;
         }
 
-        public int GetHashCode(AbstractEdge<PointType> obj)
+        public virtual int GetHashCode(AbstractEdge<PointType> obj)
         {
             return 0;
             //return obj.GetHashCode();
