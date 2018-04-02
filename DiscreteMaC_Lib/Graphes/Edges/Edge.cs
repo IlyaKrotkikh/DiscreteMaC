@@ -18,5 +18,12 @@ namespace DiscreteMaC_Lib.Graphes.Edges
             DirectedEdgeEqualityComparer defComperer = new DirectedEdgeEqualityComparer();
             return defComperer.Equals(this, other);
         }
+
+        public override bool Equals(AbstractEdge<Point> other)
+        {
+            if (other is Edge)
+                return this.Equals((other as Edge));
+            else return base.Equals(other);
+        }
     }
 }

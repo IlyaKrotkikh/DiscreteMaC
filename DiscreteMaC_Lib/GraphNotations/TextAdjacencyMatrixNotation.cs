@@ -28,7 +28,7 @@ namespace DiscreteMaC_Lib.GraphNotations
             return ConvertToGrapch(value as string);
         }
 
-        public override string ConvertFromGrapch(IGraphBasics<Point, AbstractEdge<Point>> InitialGraph)
+        public override string ConvertFromGrapch(IGraphBasics<Point, IEdgeBasics<Point>> InitialGraph)
         {
             string content = InitialGraph.GraphName + " | ";
 

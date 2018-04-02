@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DiscreteMaC_Lib.Graphes.Edges
 {
-    public class AbstractEdge<PointType> : IEquatable<AbstractEdge<PointType>> where PointType : Point
+    public class AbstractEdge<PointType> : IEquatable<AbstractEdge<PointType>>, IEdgeBasics<PointType> where PointType : Point
     {
         public PointType StartPoint { get; set; }
         public PointType EndPoint { get; set; }
@@ -28,7 +28,7 @@ namespace DiscreteMaC_Lib.Graphes.Edges
             this.EndPoint = EdgeToCopy.EndPoint;
         }
 
-        public bool Equals(AbstractEdge<PointType> other)
+        public virtual bool Equals(AbstractEdge<PointType> other)
         {
             AbstractEdgeEqualityComparer<PointType> defComperer = new AbstractEdgeEqualityComparer<PointType>();
             return defComperer.Equals(this, other);
