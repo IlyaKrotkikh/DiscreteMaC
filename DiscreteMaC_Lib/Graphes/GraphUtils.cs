@@ -103,20 +103,20 @@ namespace DiscreteMaC_Lib.Graphes
             return OutGraph;
         }
 
-        public static DirectedGraphWithPointID GenerateRandomDirectedGrapchWithPointID(string GraphName, string PointNamePrefix)
+        public static DirectedGraphWithPointID GenerateRandomDirectedGraphWithPointID(string GraphName, string PointNamePrefix)
         {
-            return GenerateRandomDirectedGrapchWithPointID(GraphName, PointNamePrefix, GlobalRandom.Next(1, 101));
+            return GenerateRandomDirectedGraphWithPointID(GraphName, PointNamePrefix, GlobalRandom.Next(1, 101));
         }
-        public static DirectedGraphWithPointID GenerateRandomDirectedGrapchWithPointID(string GraphName, string PointNamePrefix, int PointCount)
+        public static DirectedGraphWithPointID GenerateRandomDirectedGraphWithPointID(string GraphName, string PointNamePrefix, int PointCount)
         {
-            return GenerateRandomDirectedGrapchWithPointID(GraphName, PointNamePrefix, PointCount, GlobalRandom.Next(0, Convert.ToInt32(Math.Pow(PointCount, 2))));
+            return GenerateRandomDirectedGraphWithPointID(GraphName, PointNamePrefix, PointCount, GlobalRandom.Next(0, Convert.ToInt32(Math.Pow(PointCount, 2))));
         }
-        public static DirectedGraphWithPointID GenerateRandomDirectedGrapchWithPointID(string GraphName, string PointNamePrefix, int PointCount, int EdgeCount)
+        public static DirectedGraphWithPointID GenerateRandomDirectedGraphWithPointID(string GraphName, string PointNamePrefix, int PointCount, int EdgeCount)
         {
             if (EdgeCount > Math.Pow(PointCount, 2))
                 throw new Exception("Count of > PointCount^2");
 
-            DirectedGraphWithPointID OutGraph = GenerateEmptyDirectedGrapchWithPointID(GraphName, PointNamePrefix, PointCount);
+            DirectedGraphWithPointID OutGraph = GenerateEmptyDirectedGraphWithPointID(GraphName, PointNamePrefix, PointCount);
 
             List<PointWithID> ListPoints = OutGraph.PointCollection.ToList();
             for (int i = 1; i <= EdgeCount;)
@@ -129,7 +129,7 @@ namespace DiscreteMaC_Lib.Graphes
 
             return OutGraph;
         }
-        public static DirectedGraphWithPointID GenerateEmptyDirectedGrapchWithPointID(string GraphName, string PointNamePrefix, int PointCount)
+        public static DirectedGraphWithPointID GenerateEmptyDirectedGraphWithPointID(string GraphName, string PointNamePrefix, int PointCount)
         { 
             DirectedGraphWithPointID OutGraph = new DirectedGraphWithPointID(GraphName, PointNamePrefix, new AbstractEdgeEqualityComparer<PointWithID>());
             for (int i = 1; i <= PointCount; i++)
