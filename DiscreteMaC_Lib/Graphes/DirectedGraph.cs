@@ -21,7 +21,7 @@ namespace DiscreteMaC_Lib.Graphes
 
         }
 
-        public override void AddEdge(Edge GraphEdge)
+        public override bool AddEdge(Edge GraphEdge)
         {
             if (PointCollection.Contains(GraphEdge.StartPoint) && PointCollection.Contains(GraphEdge.EndPoint))
             {
@@ -29,15 +29,19 @@ namespace DiscreteMaC_Lib.Graphes
                 GraphEdge.StartPoint = PointCollection.First(i1 => i1.Name == GraphEdge.StartPoint.Name);
                 GraphEdge.EndPoint = PointCollection.First(i1 => i1.Name == GraphEdge.EndPoint.Name);
 
-                base.HashSetEdges.Add(GraphEdge);
-                (PointCollection.First(i1 => i1.Name == GraphEdge.StartPoint.Name)).AddEdge(GraphEdge);
+                if (base.HashSetEdges.Add(GraphEdge))
+                {
+                    (PointCollection.First(i1 => i1.Name == GraphEdge.StartPoint.Name)).AddEdge(GraphEdge);
+                    return true;
+                }
+                else return false;
             }
             else throw new Exception("Graph not contains this combination of points: " + GraphEdge.StartPoint.ToString() + ", " + GraphEdge.EndPoint.ToString());
         }
 
-        public override void AddPoint(Point GraphPoint)
+        public override bool AddPoint(Point GraphPoint)
         {
-            HashSetPoints.Add(GraphPoint);
+            return HashSetPoints.Add(GraphPoint);
         }
     }
 }
