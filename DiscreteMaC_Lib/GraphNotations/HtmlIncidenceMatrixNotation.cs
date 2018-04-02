@@ -11,7 +11,7 @@ using System.Windows.Data;
 
 namespace DiscreteMaC_Lib.GraphNotations
 {
-    [ValueConversion(typeof(IGraphBasics<Point,AbstractEdge<Point>>), typeof(string))]
+    [ValueConversion(typeof(IGraphBasics<Point, IEdgeBasics<Point>>), typeof(string))]
     public class HtmlIncidenceMatrixNotation : TypedGraphNotation<string>, IValueConverter
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -28,11 +28,11 @@ namespace DiscreteMaC_Lib.GraphNotations
             return ConvertToGrapch(value as string);
         }
 
-        public override string ConvertFromGrapch(IGraphBasics<Point, AbstractEdge<Point>> InitialGraph)
+        public override string ConvertFromGrapch(IGraphBasics<Point, IEdgeBasics<Point>> InitialGraph)
         {
             List<Point> points = (InitialGraph.PointCollection.ToList());
             points.Sort((i1, i2) => { return i1.Name.CompareTo(i2.Name); });
-            List<AbstractEdge<Point>> edges = (InitialGraph.EdgeCollection.ToList());
+            List<IEdgeBasics<Point>> edges = (InitialGraph.EdgeCollection.ToList());
             edges.Sort((i1, i2) => { return i1.Name.CompareTo(i2.Name); });
             StringBuilder HtmlStringBuilder;
 

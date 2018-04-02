@@ -11,14 +11,14 @@ using System.Windows.Data;
 
 namespace DiscreteMaC_Lib.GraphNotations
 {
-    [ValueConversion(typeof(IGraphBasics<Point,AbstractEdge<Point>>), typeof(string))]
+    [ValueConversion(typeof(IGraphBasics<Point, IEdgeBasics<Point>>), typeof(string))]
     public class HtmlAdjacencyMatrixNotation : TypedGraphNotation<string>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 throw new Exception("Converted value is null");
-            return ConvertFromGrapch(value as IGraphBasics<Point, AbstractEdge<Point>>);
+            return ConvertFromGrapch((IGraphBasics<Point, IEdgeBasics<Point>>)value);
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -28,7 +28,7 @@ namespace DiscreteMaC_Lib.GraphNotations
             return ConvertToGrapch(value as string);
         }
 
-        public override string ConvertFromGrapch(IGraphBasics<Point,AbstractEdge<Point>> InitialGraph)
+        public override string ConvertFromGrapch(IGraphBasics<Point, IEdgeBasics<Point>> InitialGraph)
         {
             List<Point> points = (InitialGraph.PointCollection.ToList());
             points.Sort((i1, i2) => { return i1.Name.CompareTo(i2.Name); });
@@ -54,7 +54,7 @@ namespace DiscreteMaC_Lib.GraphNotations
             HtmlStringBuilder.AppendFormat("<tr><th></th><th>{0}</th></tr>",String.Join("</th><th>", points.Select(i1 => i1.Name)));
 
             byte[,] matrix = new byte[points.Count, points.Count];
-            foreach (AbstractEdge<Point> e in InitialGraph.EdgeCollection)
+            foreach (IEdgeBasics<Point> e in InitialGraph.EdgeCollection)
             {
                 matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] += 1;
             }

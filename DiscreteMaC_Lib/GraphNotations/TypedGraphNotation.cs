@@ -13,7 +13,7 @@ namespace DiscreteMaC_Lib.GraphNotations
     [ValueConversion(typeof(IGraphBasics<Point,AbstractEdge<Point>>), typeof(object))]
     public abstract class TypedGraphNotation<CustomType>: GraphNotation
     {
-        public abstract CustomType ConvertFromGrapch(IGraphBasics<Point,AbstractEdge<Point>> InitialGraph) ;
+        public abstract CustomType ConvertFromGrapch(IGraphBasics<Point, IEdgeBasics<Point>> InitialGraph) ;
         public abstract object ConvertToGrapch(CustomType InitialGraph);
     }
 }
