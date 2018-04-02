@@ -11,6 +11,8 @@ using DiscreteMaC_Lib.Graphes.Paths;
 
 namespace DiscreteMaC_Lib.Graphes
 {
+    public delegate bool SelectionCondition<in Type>(Type ObjToCondition);
+
     public static class GraphUtils
     {
         private static Random GlobalRandom = new Random();
@@ -61,7 +63,6 @@ namespace DiscreteMaC_Lib.Graphes
             return OutGraph;
         }
 
-        //TODO: Переделать тип методов в OrientedGraph
         public static DirectedGraph GenerateRandomDirectedGraph(string GraphName)
         {
             return GenerateRandomDirectedGraph(GraphName, GlobalRandom.Next(1, 101));
@@ -75,25 +76,20 @@ namespace DiscreteMaC_Lib.Graphes
             if (EdgeCount > Math.Pow(PointCount, 2))
                 throw new Exception("Count of > PointCount^2");
 
-            DirectedGraph OutGraph = GenerateEmptyDirectedGrapch(GraphName, PointCount);
+            DirectedGraph OutGraph = GenerateEmptyDirectedGraph(GraphName, PointCount);
 
             List<Point> ListPoints = OutGraph.PointCollection.ToList();
             for (int i = 1; i <= EdgeCount;)
             {
-                try
+                if (OutGraph.AddEdge(new Edge(GraphName + "_" + i.ToString(), ListPoints[GlobalRandom.Next(0, ListPoints.Count)], ListPoints[GlobalRandom.Next(0, ListPoints.Count)])))
                 {
-                    OutGraph.AddEdge(new Edge(GraphName + "_" + i.ToString(), ListPoints[GlobalRandom.Next(0, ListPoints.Count)], ListPoints[GlobalRandom.Next(0, ListPoints.Count)]));
                     i++;
-                }
-                catch (ArgumentException)
-                {
-
                 }
             }
 
             return OutGraph;
         }
-        public static DirectedGraph GenerateEmptyDirectedGrapch(string GraphName, int PointCount)
+        public static DirectedGraph GenerateEmptyDirectedGraph(string GraphName, int PointCount)
         {
             DirectedGraph OutGraph = new DirectedGraph(GraphName);
 
@@ -103,6 +99,70 @@ namespace DiscreteMaC_Lib.Graphes
 
                 OutGraph.AddPoint(new Point("x" + i.ToString(format)));
             }
+
+            return OutGraph;
+        }
+
+        public static DirectedGraphWithPointID GenerateRandomDirectedGrapchWithPointID(string GraphName, string PointNamePrefix)
+        {
+            return GenerateRandomDirectedGrapchWithPointID(GraphName, PointNamePrefix, GlobalRandom.Next(1, 101));
+        }
+        public static DirectedGraphWithPointID GenerateRandomDirectedGrapchWithPointID(string GraphName, string PointNamePrefix, int PointCount)
+        {
+            return GenerateRandomDirectedGrapchWithPointID(GraphName, PointNamePrefix, PointCount, GlobalRandom.Next(0, Convert.ToInt32(Math.Pow(PointCount, 2))));
+        }
+        public static DirectedGraphWithPointID GenerateRandomDirectedGrapchWithPointID(string GraphName, string PointNamePrefix, int PointCount, int EdgeCount)
+        {
+            if (EdgeCount > Math.Pow(PointCount, 2))
+                throw new Exception("Count of > PointCount^2");
+
+            DirectedGraphWithPointID OutGraph = GenerateEmptyDirectedGrapchWithPointID(GraphName, PointNamePrefix, PointCount);
+
+            List<PointWithID> ListPoints = OutGraph.PointCollection.ToList();
+            for (int i = 1; i <= EdgeCount;)
+            {
+                if (OutGraph.AddEdge(new EdgePointID(GraphName + "_" + i.ToString(), ListPoints[GlobalRandom.Next(0, ListPoints.Count)], ListPoints[GlobalRandom.Next(0, ListPoints.Count)])))
+                {
+                    i++;
+                }
+            }
+
+            return OutGraph;
+        }
+        public static DirectedGraphWithPointID GenerateEmptyDirectedGrapchWithPointID(string GraphName, string PointNamePrefix, int PointCount)
+        { 
+            DirectedGraphWithPointID OutGraph = new DirectedGraphWithPointID(GraphName, PointNamePrefix, new AbstractEdgeEqualityComparer<PointWithID>());
+            for (int i = 1; i <= PointCount; i++)
+            {
+                OutGraph.AddPoint();
+            }
+            return OutGraph;
+        }
+
+        public static DirectedGraphWithPointID GetInducedSubgraph(DirectedGraphWithPointID CurrentGraph, SelectionCondition<PointWithID> PointSelectionCondition)
+        {
+            DirectedGraphWithPointID OutGraph = new DirectedGraphWithPointID(String.Format("Induced \"{0}\"", CurrentGraph.GraphName), CurrentGraph.PointNamePrefix, new AbstractEdgeEqualityComparer<PointWithID>());
+
+            IEnumerable<PointWithID> pointCollection = CurrentGraph.PointCollection.Where(i1 => PointSelectionCondition(i1));
+            IEnumerable<EdgePointID> edgeCollection = CurrentGraph.EdgeCollection.Where(i1 => pointCollection.Contains(i1.StartPoint) && pointCollection.Contains(i1.EndPoint));
+
+            foreach (PointWithID p in pointCollection)
+                OutGraph.AddPoint(p);
+            foreach (EdgePointID e in edgeCollection)
+                OutGraph.AddEdge(e);
+
+            return OutGraph;
+        }
+        public static DirectedGraphWithPointID GetSpanningSubgraph(DirectedGraphWithPointID CurrentGraph, SelectionCondition<EdgePointID> EdgeSelectionCondition)
+        {
+            DirectedGraphWithPointID OutGraph = new DirectedGraphWithPointID(String.Format("Spanning \"{0}\"", CurrentGraph.GraphName), CurrentGraph.PointNamePrefix, new AbstractEdgeEqualityComparer<PointWithID>());
+
+            IEnumerable<EdgePointID> edgeCollection = CurrentGraph.EdgeCollection.Where(i1 => EdgeSelectionCondition(i1));
+
+            foreach (PointWithID p in CurrentGraph.PointCollection)
+                OutGraph.AddPoint(p);
+            foreach (EdgePointID e in edgeCollection)
+                OutGraph.AddEdge(e);
 
             return OutGraph;
         }
@@ -250,6 +310,22 @@ namespace DiscreteMaC_Lib.Graphes
 
             descriptionBuilder.Append(" – отображения.");
             return descriptionBuilder.ToString();
+        }
+
+        public static bool Lab3_8PointSelectionCondition(PointWithID CurrentPoint)
+        {
+            if ((CurrentPoint.ID % 2) == 1)
+                return true;
+            else return false;
+        }
+
+        public static bool Lab3_8EdgeSelectionCondition(EdgePointID CurrentEdge)
+        {
+            if ((CurrentEdge.StartPoint.ID + CurrentEdge.EndPoint.ID) == 0)
+                return false;
+            else if (((CurrentEdge.StartPoint.ID + CurrentEdge.EndPoint.ID) % 2) == 0)
+                return true;
+            else return false;
         }
     }
 }
