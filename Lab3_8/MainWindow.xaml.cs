@@ -132,14 +132,14 @@ namespace Lab3_8
             MainGraphPointCount = 4;
             MainGraphEdgeCount = 7;
 
-            MainGraph = GraphUtils.GenerateRandomDirectedGrapchWithPointID(MainGraphName, "x", MainGraphPointCount, MainGraphEdgeCount);
+            MainGraph = GraphUtils.GenerateRandomDirectedGraphWithPointID(MainGraphName, "x", MainGraphPointCount, MainGraphEdgeCount);
             SpanningSubgraph = GraphUtils.GetSpanningSubgraph(MainGraph, GraphUtils.Lab3_8EdgeSelectionCondition);
             InducedSubgrap = GraphUtils.GetInducedSubgraph(MainGraph, GraphUtils.Lab3_8PointSelectionCondition);
         }
 
         private void BtnGenMainGraph_Click(object sender, RoutedEventArgs e)
         {
-            MainGraph = GraphUtils.GenerateRandomDirectedGrapchWithPointID(MainGraphName, "x", MainGraphPointCount, MainGraphEdgeCount);
+            MainGraph = GraphUtils.GenerateRandomDirectedGraphWithPointID(MainGraphName, "x", MainGraphPointCount, MainGraphEdgeCount);
             SpanningSubgraph = GraphUtils.GetSpanningSubgraph(MainGraph, GraphUtils.Lab3_8EdgeSelectionCondition);
             InducedSubgrap = GraphUtils.GetInducedSubgraph(MainGraph, GraphUtils.Lab3_8PointSelectionCondition);
         }
