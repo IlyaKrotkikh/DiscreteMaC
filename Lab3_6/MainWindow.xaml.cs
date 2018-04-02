@@ -142,7 +142,7 @@ namespace Lab3_6
 
         private void BtnCreateEmptyGraph_Click(object sender, RoutedEventArgs e)
         {
-            MainGraph = GraphUtils.GenerateEmptyDirectedGrapch(MainGraphName, MainGraphPointsCount);
+            MainGraph = GraphUtils.GenerateEmptyDirectedGraph(MainGraphName, MainGraphPointsCount);
             TaskAnswer = false;
         }
 
