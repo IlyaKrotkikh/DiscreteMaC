@@ -25,6 +25,18 @@ namespace DiscreteMaC_Lib.Graphes.Points
             this.NamePrefix = NamePrefix;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is PointWithID)
+                return Equals(obj as PointWithID);
+            else return base.Equals(obj);
+        }
+
         public bool Equals(PointWithID other)
         {
             PointWithIDEqualityComparer defComparer = new PointWithIDEqualityComparer();

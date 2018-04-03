@@ -41,6 +41,13 @@ namespace Console_Test
 
             Console.WriteLine(notation.ConvertFromGrapch(TestGrapch1));
             Console.WriteLine(GraphUtils.IsDirectedTree(TestGrapch1));
+
+            foreach (KeyValuePair<Point, IEnumerable<Point>> kvp in GraphUtils.GetOutTransitiveClosureForAllPoints(TestGrapch1))
+                Console.WriteLine("Point {0}, Out transitive closure = {{{1}}}", kvp.Key, String.Join(",", kvp.Value));
+            Console.WriteLine();
+            foreach (KeyValuePair<Point, IEnumerable<Point>> kvp in GraphUtils.GetInTransitiveClosureForAllPoints(TestGrapch1))
+                Console.WriteLine("Point {0}, In transitive closure = {{{1}}}", kvp.Key, String.Join(",", kvp.Value));
+
             Console.ReadLine();
 
             Task task = new Task(BuildGrapgAndTestIt);
@@ -49,6 +56,8 @@ namespace Console_Test
             Console.ReadLine();
             stop = true;
             Console.ReadLine();
+
+            
         }
 
         public static void BuildGrapgAndTestIt()

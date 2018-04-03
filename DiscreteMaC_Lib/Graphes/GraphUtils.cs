@@ -180,6 +180,59 @@ namespace DiscreteMaC_Lib.Graphes
             return CurrentGraph.EdgeCollection.Count(i1 => i1.StartPoint == CurrentPoint);
         }
 
+        public static IEnumerable<Point> GetInDegreeForPoint(IGraphBasics<Point, IEdgeBasics<Point>> CurrentGraph, Point CurrentPoint)
+        {
+            if (!CurrentGraph.PointCollection.Contains(CurrentPoint))
+                throw new Exception("Point " + CurrentPoint.ToString() + " not contains in graph " + CurrentGraph);
+            HashSet<Point> inPoints = new HashSet<Point>(CurrentGraph.EdgeCollection.Where(i1 => i1.EndPoint == CurrentPoint).Select(i1 => i1.StartPoint));
+            
+            return inPoints;
+        }
+        public static IEnumerable<Point> GetOutDegreeForPoint(IGraphBasics<Point, IEdgeBasics<Point>> CurrentGraph, Point CurrentPoint)
+        {
+            if (!CurrentGraph.PointCollection.Contains(CurrentPoint))
+                throw new Exception("Point " + CurrentPoint.ToString() + " not contains in graph " + CurrentGraph);
+            HashSet<Point> inPoints = new HashSet<Point>(CurrentGraph.EdgeCollection.Where(i1 => i1.StartPoint == CurrentPoint).Select(i1 => i1.EndPoint));
+
+            return inPoints;
+        }
+
+        public static IEnumerable<Point> GetInTransitiveClosureForPoint(IGraphBasics<Point, IEdgeBasics<Point>> CurrentGraph, Point CurrentPoint)
+        {
+            List<Point> listTransitivePoints = new List<Point>(GetInDegreeForPoint(CurrentGraph, CurrentPoint));
+            for (int pointID = 0; pointID < listTransitivePoints.Count(); pointID++)
+            {
+                listTransitivePoints = listTransitivePoints.Union(GetInDegreeForPoint(CurrentGraph, listTransitivePoints[pointID])).ToList();
+            }
+            
+            return listTransitivePoints;
+        }
+
+        public static IEnumerable<Point> GetOutTransitiveClosureForPoint(IGraphBasics<Point, IEdgeBasics<Point>> CurrentGraph, Point CurrentPoint)
+        {
+            List<Point> listTransitivePoints = new List<Point>(GetOutDegreeForPoint(CurrentGraph, CurrentPoint));
+            for (int pointID = 0; pointID < listTransitivePoints.Count(); pointID++)
+            {
+                listTransitivePoints = listTransitivePoints.Union(GetOutDegreeForPoint(CurrentGraph, listTransitivePoints[pointID])).ToList();
+            }
+
+            return listTransitivePoints;
+        }
+
+        public static IEnumerable<KeyValuePair<Point, IEnumerable<Point>>> GetInTransitiveClosureForAllPoints(IGraphBasics<Point, IEdgeBasics<Point>> CurrentGraph)
+        {
+            return CurrentGraph.PointCollection.Select(i1 =>
+                new KeyValuePair<Point, IEnumerable<Point>>(i1, GetInTransitiveClosureForPoint(CurrentGraph, i1))
+            );
+        }
+
+        public static IEnumerable<KeyValuePair<Point,IEnumerable<Point>>> GetOutTransitiveClosureForAllPoints(IGraphBasics<Point, IEdgeBasics<Point>> CurrentGraph)
+        {
+            return CurrentGraph.PointCollection.Select(i1 =>
+                new KeyValuePair<Point, IEnumerable<Point>>(i1, GetOutTransitiveClosureForPoint(CurrentGraph, i1))
+            );
+        }
+
         public static IEnumerable<KeyValuePair<Point, int>> CountInDegreeForAllPoint(IGraphBasics<Point, AbstractEdge<Point>> CurrentGraph)
         {
             return CurrentGraph.PointCollection.
