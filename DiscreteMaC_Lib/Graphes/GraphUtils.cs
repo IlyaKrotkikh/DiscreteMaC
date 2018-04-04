@@ -141,18 +141,25 @@ namespace DiscreteMaC_Lib.Graphes
 
         public static DirectedGraphWithPointID GetInducedSubgraph(DirectedGraphWithPointID CurrentGraph, SelectionCondition<PointWithID> PointSelectionCondition)
         {
+            IEnumerable<PointWithID> pointCollection = CurrentGraph.PointCollection.Where(i1 => PointSelectionCondition(i1));
+
+            return GetInducedSubgraph(CurrentGraph, pointCollection);
+        }
+
+        public static DirectedGraphWithPointID GetInducedSubgraph(DirectedGraphWithPointID CurrentGraph, IEnumerable<Point> PointCollection)
+        {
             DirectedGraphWithPointID OutGraph = new DirectedGraphWithPointID(String.Format("Induced \"{0}\"", CurrentGraph.GraphName), CurrentGraph.PointNamePrefix, new AbstractEdgeEqualityComparer<PointWithID>());
 
-            IEnumerable<PointWithID> pointCollection = CurrentGraph.PointCollection.Where(i1 => PointSelectionCondition(i1));
-            IEnumerable<EdgePointID> edgeCollection = CurrentGraph.EdgeCollection.Where(i1 => pointCollection.Contains(i1.StartPoint) && pointCollection.Contains(i1.EndPoint));
+            IEnumerable<EdgePointID> edgeCollection = CurrentGraph.EdgeCollection.Where(i1 => PointCollection.Contains(i1.StartPoint) && PointCollection.Contains(i1.EndPoint));
 
-            foreach (PointWithID p in pointCollection)
+            foreach (PointWithID p in PointCollection)
                 OutGraph.AddPoint(p);
             foreach (EdgePointID e in edgeCollection)
                 OutGraph.AddEdge(e);
 
             return OutGraph;
         }
+
         public static DirectedGraphWithPointID GetSpanningSubgraph(DirectedGraphWithPointID CurrentGraph, SelectionCondition<EdgePointID> EdgeSelectionCondition)
         {
             DirectedGraphWithPointID OutGraph = new DirectedGraphWithPointID(String.Format("Spanning \"{0}\"", CurrentGraph.GraphName), CurrentGraph.PointNamePrefix, new AbstractEdgeEqualityComparer<PointWithID>());
@@ -231,6 +238,52 @@ namespace DiscreteMaC_Lib.Graphes
             return CurrentGraph.PointCollection.Select(i1 =>
                 new KeyValuePair<Point, IEnumerable<Point>>(i1, GetOutTransitiveClosureForPoint(CurrentGraph, i1))
             );
+        }
+
+        public static IEnumerable<IEnumerable<Point>> GetCollectionPointsOneSidedCompOfGraph(IGraphBasics<Point, IEdgeBasics<Point>> CurrentGraph)
+        {
+            List<KeyValuePair<List<Point>, List<Point>>> listKvpPoints = new List<KeyValuePair<List<Point>, List<Point>>>(CurrentGraph.EdgeCollection
+                .Select(i1 =>
+                 {
+                     KeyValuePair<List<Point>, List<Point>> kvp = new KeyValuePair<List<Point>, List<Point>>(new List<Point>(), new List<Point>());
+                     kvp.Key.Add(i1.StartPoint);
+                     if (i1.StartPoint != i1.EndPoint)
+                         kvp.Key.Add(i1.EndPoint);
+                     kvp.Value.Add(i1.EndPoint);
+                     return kvp;
+                 }
+            ));
+
+            bool calcEnd = false;
+            while (!calcEnd)
+            {
+                foreach (KeyValuePair<List<Point>, List<Point>> kvp in listKvpPoints)
+                {
+                    IEnumerable<Point> pointCondidates = CurrentGraph.EdgeCollection
+                            .Where(i1 => kvp.Value.Contains(i1.StartPoint))
+                            .Select(i1 => i1.EndPoint)
+                            .Except(kvp.Key)
+                            .ToList();
+                    kvp.Key.AddRange(pointCondidates);
+                    kvp.Value.Clear();
+                    kvp.Value.AddRange(pointCondidates);
+
+                    
+                }
+
+                for (int listID = 0; listID < listKvpPoints.Count;)
+                {
+                    KeyValuePair<List<Point>,List<Point>> currentList = listKvpPoints[listID];
+                    listKvpPoints
+                        .RemoveAll(i1 => i1.Value.Count() == 0 && !currentList.Equals(i1) && (i1.Key.Except(currentList.Key).Count() == 0));
+                    listID = listKvpPoints.IndexOf(currentList) +1 ;
+                }
+
+                if (listKvpPoints.Count(i1 => i1.Value.Count() == 0) == listKvpPoints.Count())
+                    calcEnd = true;
+            }
+
+            return listKvpPoints.Select( i1 => i1.Key);
         }
 
         public static IEnumerable<KeyValuePair<Point, int>> CountInDegreeForAllPoint(IGraphBasics<Point, AbstractEdge<Point>> CurrentGraph)
@@ -331,6 +384,47 @@ namespace DiscreteMaC_Lib.Graphes
                 }
             }
             return false;
+        }
+
+        public static IEnumerable<KeyValuePair<Point, IEnumerable<AbstractPath<IEdgeBasics<Point>, Point>>>> GetAllPathsForGraph(IGraphBasics<Point, IEdgeBasics<Point>> CurrentGraph)
+        {
+            List<KeyValuePair<Point, IEnumerable<AbstractPath<IEdgeBasics<Point>, Point>>>> listPathsByPoints = new List<KeyValuePair<Point, IEnumerable<AbstractPath<IEdgeBasics<Point>, Point>>>>();
+            foreach (Point p in CurrentGraph.PointCollection)
+            {
+                listPathsByPoints.Add(new KeyValuePair<Point, IEnumerable<AbstractPath<IEdgeBasics<Point>, Point>>>(p, GetPathsForPointInGraph(CurrentGraph, p)));
+            }
+            return listPathsByPoints;
+        }
+
+        public static IEnumerable<AbstractPath<IEdgeBasics<Point>,Point>> GetPathsForPointInGraph(IGraphBasics<Point, IEdgeBasics<Point>> CurrentGraph, Point CurrentPoint)
+        {
+            List<Path> currentListPaths = new List<Path>
+                    (
+                        CurrentGraph.EdgeCollection
+                        .Where(i2 => i2.StartPoint.Equals(CurrentPoint))
+                        .Select(i2 =>
+                        {
+                            Path currentPath = Path.InitPath();
+                            currentPath.AddEdge(i2);
+                            return currentPath;
+                        }));
+
+            for (int i = 0; i < currentListPaths.Count(); i++)
+            {
+                Path currentPath = currentListPaths[i];
+                IEnumerable<IEdgeBasics<Point>> candidatesToPath = CurrentGraph.EdgeCollection.Where(i1 => i1.StartPoint == currentPath.ListPathEdges.Last().EndPoint);
+                foreach (IEdgeBasics<Point> e in candidatesToPath)
+                {
+                    if (!currentPath.ListPathPoints.Contains(e.EndPoint))
+                    {
+                        Path newPath = Path.InitPath(currentPath);
+                        newPath.AddEdge(e);
+                        currentListPaths.Add(newPath);
+                    }
+                }
+            }
+
+            return currentListPaths;
         }
 
         public static bool IsDirectedTree(IGraphBasics<Point, AbstractEdge<Point>> CurrentGraph)
