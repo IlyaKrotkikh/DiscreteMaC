@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DiscreteMaC_Lib.Graphes.Paths
 {
-    public abstract class AbstractPath<EdgeType, PointType> : IEquatable<AbstractPath<EdgeType, PointType>> where EdgeType:AbstractEdge<Point> where PointType: Point
+    public abstract class AbstractPath<EdgeType, PointType> : IEquatable<AbstractPath<EdgeType, PointType>> where EdgeType:IEdgeBasics<Point> where PointType: Point
     {
         public ReadOnlyCollection<EdgeType> ListPathEdges { get; set; }
         public ReadOnlyCollection<PointType> ListPathPoints { get; set; }
