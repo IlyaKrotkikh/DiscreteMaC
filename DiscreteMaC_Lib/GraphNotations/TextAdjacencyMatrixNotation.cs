@@ -30,16 +30,16 @@ namespace DiscreteMaC_Lib.GraphNotations
 
         public override string ConvertFromGrapch(IGraphBasics<Point, IEdgeBasics<Point>> InitialGraph)
         {
-            string content = InitialGraph.GraphName + " | ";
+            string content = InitialGraph.GraphName + "\n   | ";
 
             List<Point> points = (InitialGraph.PointCollection.ToList());
             points.Sort((i1, i2) => { return i1.Name.CompareTo(i2.Name); });
 
-            content = String.Concat(content, String.Join(" | ", points.Select(i1 => i1.Name)));
+            content = String.Concat(content, String.Join("| ", points.Select(i1 => i1.Name)));
             content = String.Concat(content, "\n");
 
             byte[,] matrix = new byte[points.Count, points.Count];
-            foreach (AbstractEdge<Point> e in InitialGraph.EdgeCollection)
+            foreach (IEdgeBasics<Point> e in InitialGraph.EdgeCollection)
             {
                 matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] += 1;
             }
