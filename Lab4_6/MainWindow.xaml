@@ -8,7 +8,7 @@
         xmlns:LibDMaC="clr-namespace:DiscreteMaC_Lib.GraphNotations;assembly=DiscreteMaC_Lib"
 
         mc:Ignorable="d"
-        Title="MainWindow" Height="372" Width="525">
+        Title="Лабораторная 4, Вариант 6" Height="372" Width="525">
     <Window.Resources>
         <LibDMaC:HtmlAdjacencyMatrixNotation x:Key="HtmlAdjacencyMatrixConverter"/>
     </Window.Resources>
@@ -35,14 +35,14 @@
             <TextBox Grid.Row="0"  Grid.Column="1" Margin="2" Text="{Binding MainGraphName}"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Margin="2" Text="Вершин: "/>
             <ComboBox x:Name="CmbPointsCount" Grid.Row="1" Grid.Column="1" Margin="2" SelectedItem="{Binding MainGraphPointsCount}">
-                <System:Int32>0</System:Int32>
+                <System:Int32>4</System:Int32>
                 <System:Int32>5</System:Int32>
                 <System:Int32>6</System:Int32>
                 <System:Int32>7</System:Int32>
                 <System:Int32>8</System:Int32>
             </ComboBox>
 
-            <Button x:Name="BtnGenGraphGAjacM" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="2">
+            <Button x:Name="BtnGenMainGraph" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="2" Click="BtnGenMainGraph_Click">
                 <TextBlock Text="Показать"/>
             </Button>
         </Grid>
@@ -72,8 +72,14 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Односторонняя компонента:" Margin="2"/>
-            <ComboBox Grid.Row="1"  Margin="2"/>
-            <WebBrowser x:Name="BrowserGOneSideComp" Grid.Row="2" local:BrowserBehavior.Html="123" Margin="2"/>
+            <ComboBox x:Name="CmbOneSideItems" Grid.Row="1" ItemsSource="{Binding CollectionOneSideItems}"  Margin="2" IsReadOnly="True" SelectedIndex="0">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <WebBrowser x:Name="BrowserGOneSideComp" Grid.Row="2" local:BrowserBehavior.Html="{Binding ElementName=CmbOneSideItems, Path=SelectedItem.IncludedGraph , Converter={StaticResource HtmlAdjacencyMatrixConverter}, Mode=OneWay}" Margin="2"/>
         </Grid>
     </Grid>
 </Window>

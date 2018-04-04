@@ -1,5 +1,6 @@
 ﻿using DiscreteMaC_Lib.Graphes;
 using DiscreteMaC_Lib.Graphes.Edges;
+using DiscreteMaC_Lib.Graphes.Points;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,7 +31,7 @@ namespace Lab4_6
         private int _MainGraphPointsCount;
         private DiscreteMaC_Lib.Graphes.Points.Point _SelectedPoint;
         private string _InTransitiveClosure, _OutTransitiveClosure;
-        private ObservableCollection<OneSideItem> _CollectionOneSideItems;
+        private IEnumerable<OneSideItem> _CollectionOneSideItems;
         private int CurrentVariant;
         public DirectedGraphWithPointID MainGraph
         {
@@ -47,6 +48,7 @@ namespace Lab4_6
                     NotifyPropertyChanged("SelectedPoint");
                     NotifyPropertyChanged("InTransitiveClosure");
                     NotifyPropertyChanged("OutTransitiveClosure");
+                    NotifyPropertyChanged("CollectionOneSideItems");
                 }
             }
         }
@@ -87,7 +89,7 @@ namespace Lab4_6
             get
             {
                 if (MainGraph.PointCollection.Count() < CurrentVariant)
-                    return this.MainGraph.PointCollection.SingleOrDefault(i1 => i1.ID == (MainGraph.PointCollection.Count() -1));
+                    return this.MainGraph.PointCollection.Max();
                 else return this.MainGraph.PointCollection.SingleOrDefault(i1 => i1.ID == CurrentVariant);
 
             }
@@ -97,7 +99,7 @@ namespace Lab4_6
             get
             {
                 if (MainGraph != null && SelectedPoint != null)
-                    return String.Format("{{{0}}}", String.Join(",", GraphUtils.GetInTransitiveClosureForPoint(MainGraph, SelectedPoint)));
+                    return String.Format("{{{0}}}", String.Join(",", GraphUtils.GetInTransitiveClosureForPoint(MainGraph, SelectedPoint).OrderBy(i1 => i1.Name)));
                 else return String.Empty;
             }
         }
@@ -106,8 +108,16 @@ namespace Lab4_6
             get
             {
                 if (MainGraph != null && SelectedPoint != null)
-                    return String.Format("{{{0}}}", String.Join(",", GraphUtils.GetOutTransitiveClosureForPoint(MainGraph, SelectedPoint)));
+                    return String.Format("{{{0}}}", String.Join(",", GraphUtils.GetOutTransitiveClosureForPoint(MainGraph, SelectedPoint).OrderBy(i1 => i1.Name)));
                 else return String.Empty;
+            }
+        }
+
+        public IEnumerable<OneSideItem> CollectionOneSideItems
+        {
+            get
+            {
+                return GraphUtils.GetCollectionPointsOneSidedCompOfGraph(MainGraph).Select(i1 => new OneSideItem(MainGraph, i1));
             }
         }
 
@@ -121,9 +131,14 @@ namespace Lab4_6
             CurrentVariant = 6;
 
             MainGraphName = "g1";
-            MainGraphPointsCount = 8;
-            MainGraph = GraphUtils.GenerateRandomDirectedGraphWithPointID(MainGraphName, "x", MainGraphPointsCount);
+            MainGraphPointsCount = 6;
+            MainGraph = GraphUtils.GenerateRandomDirectedGraphWithPointID(MainGraphName, "x", MainGraphPointsCount, MainGraphPointsCount);
 
+        }
+
+        private void BtnGenMainGraph_Click(object sender, RoutedEventArgs e)
+        {
+            MainGraph = GraphUtils.GenerateRandomDirectedGraphWithPointID(MainGraphName, "x", MainGraphPointsCount, MainGraphPointsCount);
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
