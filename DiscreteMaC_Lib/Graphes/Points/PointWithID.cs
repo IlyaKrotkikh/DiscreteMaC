@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DiscreteMaC_Lib.Graphes.Points
 {
-    public class PointWithID : Point, IEquatable<PointWithID>
+    public class PointWithID : Point, IEquatable<PointWithID>, IComparable<PointWithID>
     {
         public string NamePrefix { get; set; }
         public int ID { get; set; }
@@ -25,10 +25,28 @@ namespace DiscreteMaC_Lib.Graphes.Points
             this.NamePrefix = NamePrefix;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is PointWithID)
+                return Equals(obj as PointWithID);
+            else return base.Equals(obj);
+        }
+
         public bool Equals(PointWithID other)
         {
             PointWithIDEqualityComparer defComparer = new PointWithIDEqualityComparer();
             return defComparer.Equals(this, other);
+        }
+
+        public int CompareTo(PointWithID other)
+        {
+            if (other == null) return 1;
+            else return ID.CompareTo(other.ID);
         }
     }
 }
