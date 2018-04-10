@@ -396,7 +396,7 @@ namespace DiscreteMaC_Lib.Graphes
             return listPathsByPoints;
         }
 
-        public static IEnumerable<AbstractPath<IEdgeBasics<Point>,Point>> GetPathsForPointInGraph(IGraphBasics<Point, IEdgeBasics<Point>> CurrentGraph, Point CurrentPoint)
+        public static List<AbstractPath<IEdgeBasics<Point>,Point>> GetPathsForPointInGraph(IGraphBasics<Point, IEdgeBasics<Point>> CurrentGraph, Point CurrentPoint)
         {
             List<Path> currentListPaths = new List<Path>
                     (
