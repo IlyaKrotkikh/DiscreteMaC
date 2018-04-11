@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Lab4_8"
         xmlns:LibDMaC="clr-namespace:DiscreteMaC_Lib.GraphNotations;assembly=DiscreteMaC_Lib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="402" Width="525">
+        Title="MainWindow" Height="422" Width="525">
     <Window.Resources>
         <LibDMaC:HtmlAdjacencyMatrixNotation x:Key="HtmlAdjacencyMatrixConverter"/>
     </Window.Resources>
@@ -58,11 +58,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Транзитивное замыкание для вершины:" TextWrapping="Wrap" Margin="2"/>
-            <ComboBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="2"/>
+            <ComboBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding MainGraph.PointCollection}" SelectedItem="{Binding TransitiveClosurePoint}" Margin="2"/>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Прямое: " Margin="2"/>
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="1234" Margin="2"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding OutClosureForPoint}" TextWrapping="Wrap" Margin="2"/>
             <TextBlock Grid.Row="3" Grid.Column="0" Text="Обратное: " Margin="2"/>
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="1234" Margin="2"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding InClosureForPoint}" TextWrapping="Wrap" Margin="2"/>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="1" Margin="2">
             <Grid.RowDefinitions>
@@ -77,10 +77,10 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Найти вершины, входящие в путь между вершинами:" TextWrapping="Wrap" Margin="2"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Вершина 1" TextAlignment="Center" FontWeight="Bold" Margin="2"/>
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="Вершина 2" TextAlignment="Center" FontWeight="Bold" Margin="2"/>
-            <ComboBox Grid.Row="2" Grid.Column="0" Margin="2"/>
-            <ComboBox Grid.Row="2" Grid.Column="1" Margin="2"/>
-            <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="Вершина 2" TextAlignment="Center" FontWeight="Bold"  Margin="2"/>
+            <ComboBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding MainGraph.PointCollection}" SelectedItem="{Binding FirstSelectedPoint, Mode=OneWayToSource}" Margin="2"/>
+            <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding MainGraph.PointCollection}" SelectedItem="{Binding SecondSelectedPoint, Mode=OneWayToSource}" Margin="2"/>
+            <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding ListPathPoints}"/>
         </Grid>
         <WebBrowser x:Name="BrowserG1" Grid.Row="3" Grid.Column="0" local:BrowserBehavior.Html="{Binding MainGraph, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
     </Grid>
