@@ -1,0 +1,87 @@
+﻿<Window x:Class="Lab4_8.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab4_8"
+        xmlns:LibDMaC="clr-namespace:DiscreteMaC_Lib.GraphNotations;assembly=DiscreteMaC_Lib"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="422" Width="525">
+    <Window.Resources>
+        <LibDMaC:HtmlAdjacencyMatrixNotation x:Key="HtmlAdjacencyMatrixConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+            <TextBlock Text="Лабораторная работа 4, Кротких." FontSize="24"/>
+        </Border>
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="Граф задается матрицей смежности, которая формируется случайным образом. Найти прямое и обратное транзитивное замыкание для вершины х8." FontWeight="Bold" TextWrapping="Wrap" Margin="5"/>
+        <Grid Grid.Row="2"  Grid.Column="0" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Название графа"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Кол-во вершин"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Кол-во ребер"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="2" Text="{Binding MainGraphName}"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Margin="2" Text="{Binding MainGraphPointCount}"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Margin="2" Text="{Binding MainGraphEdgeCount}"/>
+            <Button x:Name="BtnGenMainGraph" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="2" Click="BtnGenMainGraph_Click">
+                <TextBlock Text="Задать граф"/>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1" Margin="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Транзитивное замыкание для вершины:" TextWrapping="Wrap" Margin="2"/>
+            <ComboBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding MainGraph.PointCollection}" SelectedItem="{Binding TransitiveClosurePoint}" Margin="2"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Прямое: " Margin="2"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding OutClosureForPoint}" TextWrapping="Wrap" Margin="2"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Обратное: " Margin="2"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding InClosureForPoint}" TextWrapping="Wrap" Margin="2"/>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="1" Margin="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Найти вершины, входящие в путь между вершинами:" TextWrapping="Wrap" Margin="2"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Вершина 1" TextAlignment="Center" FontWeight="Bold" Margin="2"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="Вершина 2" TextAlignment="Center" FontWeight="Bold"  Margin="2"/>
+            <ComboBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding MainGraph.PointCollection}" SelectedItem="{Binding FirstSelectedPoint, Mode=OneWayToSource}" Margin="2"/>
+            <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding MainGraph.PointCollection}" SelectedItem="{Binding SecondSelectedPoint, Mode=OneWayToSource}" Margin="2"/>
+            <ListBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding ListPathPoints}"/>
+        </Grid>
+        <WebBrowser x:Name="BrowserG1" Grid.Row="3" Grid.Column="0" local:BrowserBehavior.Html="{Binding MainGraph, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
+    </Grid>
+</Window>
