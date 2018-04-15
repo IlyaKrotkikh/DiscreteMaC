@@ -43,27 +43,35 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graphes\AbstractGraph.cs" />
+    <Compile Include="Graphes\BaseMinimalGraph.cs" />
     <Compile Include="Graphes\DirectedGraphWithPointID.cs" />
+    <Compile Include="Graphes\DirectedGraphWithValuedEdgeAndPointID.cs" />
     <Compile Include="Graphes\Edges\AbstarctEdge.cs" />
+    <Compile Include="Graphes\Edges\ValuedEdge.cs" />
     <Compile Include="Graphes\Edges\Edge.cs" />
+    <Compile Include="Graphes\Edges\EdgeComparers\DirectedValuedEdgeEqualityComparer.cs" />
     <Compile Include="Graphes\Edges\EdgeComparers\NonDirectedEdgeEqualityComparer.cs" />
     <Compile Include="Graphes\Edges\EdgeComparers\DirectedEdgeEqualityComparer.cs" />
     <Compile Include="Graphes\Edges\EdgeComparers\AbstractEdgeEqualityComparer.cs" />
     <Compile Include="Graphes\Edges\EdgeComparers\PointEdgeEqualityComparer.cs" />
     <Compile Include="Graphes\Edges\EdgePointID.cs" />
     <Compile Include="Graphes\Edges\IEdgeBasics.cs" />
+    <Compile Include="Graphes\Edges\IValuedEdgeBasics.cs" />
     <Compile Include="Graphes\GraphUtils.cs" />
     <Compile Include="Graphes\IGraphBasics.cs" />
     <Compile Include="Graphes\DirectedGraph.cs" />
     <Compile Include="Graphes\Paths\AbstractPath.cs" />
     <Compile Include="Graphes\Paths\Path.cs" />
     <Compile Include="Graphes\Paths\PathComparers\PathEqualityComparer.cs" />
+    <Compile Include="Graphes\Paths\ValuedPath.cs" />
     <Compile Include="Graphes\Points\PointComparers\PointWithIDEqualityComparer.cs" />
     <Compile Include="Graphes\Points\PointComparers\PointEqualityComparer.cs" />
     <Compile Include="Graphes\Points\PointWithID.cs" />
     <Compile Include="GraphNotations\GraphNotation.cs" />
+    <Compile Include="GraphNotations\HtmlAdjacencyValuedMatrixNotation.cs" />
     <Compile Include="GraphNotations\HtmlAdjacencyMatrixNotation.cs" />
     <Compile Include="GraphNotations\HtmlIncidenceMatrixNotation.cs" />
+    <Compile Include="GraphNotations\TextAdjacencyValuedMatrixNotation.cs" />
     <Compile Include="GraphNotations\TextAdjacencyMatrixNotation.cs" />
     <Compile Include="GraphNotations\TypedGraphNotation.cs" />
     <Compile Include="Graphes\Points\Point.cs" />
