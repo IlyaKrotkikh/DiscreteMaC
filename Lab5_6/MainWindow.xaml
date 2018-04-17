@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab5_6"
+        xmlns:LibDMaC="clr-namespace:DiscreteMaC_Lib.GraphNotations;assembly=DiscreteMaC_Lib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+
+        Title="Лабораторная 5, Вариант 6" Height="350" Width="525">
+    <Window.Resources>
+        <LibDMaC:HtmlAdjacencyMatrixNotation x:Key="HtmlAdjacencyMatrixConverter"/>
+    </Window.Resources>
     <Grid>
         
     </Grid>
