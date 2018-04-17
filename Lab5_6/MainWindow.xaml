@@ -5,13 +5,97 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab5_6"
         xmlns:LibDMaC="clr-namespace:DiscreteMaC_Lib.GraphNotations;assembly=DiscreteMaC_Lib"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
 
-        Title="Лабораторная 5, Вариант 6" Height="350" Width="525">
+        Title="Лабораторная 5, Вариант 6" Height="650" Width="550">
     <Window.Resources>
         <LibDMaC:HtmlAdjacencyMatrixNotation x:Key="HtmlAdjacencyMatrixConverter"/>
     </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Графы G1 и G2 задаются матрицами смежности, которые формируются случайным образом. Находится G3 = G1 ∩ G2. Разбить граф G3 на максимальные сильно связные подграфы, начиная с xi, , где i номер вашего варианта. Для четных вариантов разбиение выполнить методом Мальгранжа, для нечетных – матричным методом." TextWrapping="WrapWithOverflow" Margin="5"/>
+        <Grid Grid.Row="1"  Grid.Column="0" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Граф :"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Вершин: "/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="2" Text="{Binding GraphG1Name}"/>
+            <ComboBox Grid.Column="1" Grid.Row="1" Margin="2" SelectedItem="{Binding GraphG1Points}">
+                <System:Int32>2</System:Int32>
+                <System:Int32>3</System:Int32>
+                <System:Int32>4</System:Int32>
+                <System:Int32>5</System:Int32>
+                <System:Int32>6</System:Int32>
+                <System:Int32>7</System:Int32>
+            </ComboBox>
+            <Button x:Name="BtnGenGraphG1" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="2" Click="BtnGenGraphG1_Click">
+                <TextBlock Text="Задать граф"/>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1"  Grid.Column="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Граф :"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Вершин: "/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="2" Text="{Binding GraphG2Name}"/>
+            <ComboBox Grid.Column="1" Grid.Row="1" Margin="2" SelectedItem="{Binding GraphG2Points}">
+                <System:Int32>2</System:Int32>
+                <System:Int32>3</System:Int32>
+                <System:Int32>4</System:Int32>
+                <System:Int32>5</System:Int32>
+                <System:Int32>6</System:Int32>
+                <System:Int32>7</System:Int32>
+            </ComboBox>
+            <Button x:Name="BtnGenGraphG2" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="2" Click="BtnGenGraphG2_Click">
+                <TextBlock Text="Задать граф"/>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1"  Grid.Column="2" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="1" Text="G3 = G1 ∩ G2" FontWeight="Bold" TextAlignment="Center"/>
+        </Grid>
+        <WebBrowser x:Name="BrowserG1" Grid.Row="2" Grid.Column="0" local:BrowserBehavior.Html="{Binding GraphG1, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
+        <WebBrowser x:Name="BrowserG2" Grid.Row="2" Grid.Column="1" local:BrowserBehavior.Html="{Binding GraphG2, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
+        <WebBrowser x:Name="BrowserG12" Grid.Row="2" Grid.Column="2" local:BrowserBehavior.Html="{Binding GraphG12, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Text="Максимальные сильно связные подграфы графа G3, начиная с x6 или с последней вершины." TextWrapping="WrapWithOverflow" Margin="5"/>
+        <ListBox x:Name="lstStrongComps" Grid.Row="4" Grid.Column="0" Margin="5" ItemsSource="{Binding ListStrongComps, Mode=OneWay}" SelectedItem="{Binding SelectedStrongComponent}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding GraphName}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <WebBrowser x:Name="BrowserGStrongComp12" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" local:BrowserBehavior.Html="{Binding SelectedStrongComponent, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
     </Grid>
 </Window>
