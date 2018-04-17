@@ -213,20 +213,20 @@ namespace DiscreteMaC_Lib.Graphes
         {
             if (!CurrentGraph.PointCollection.Contains(CurrentPoint))
                 throw new Exception("Point " + CurrentPoint.ToString() + " not contains in graph " + CurrentGraph);
-            return CurrentGraph.EdgeCollection.Count(i1 => i1.EndPoint == CurrentPoint);
+            return CurrentGraph.EdgeCollection.Count(i1 => i1.EndPoint.Equals(CurrentPoint));
         }
         public static int CountOutDegreeForPoint(IGraphBasics<Point, AbstractEdge<Point>> CurrentGraph, Point CurrentPoint)
         {
             if (!CurrentGraph.PointCollection.Contains(CurrentPoint))
                 throw new Exception("Point " + CurrentPoint.ToString() + " not contains in graph " + CurrentGraph);
-            return CurrentGraph.EdgeCollection.Count(i1 => i1.StartPoint == CurrentPoint);
+            return CurrentGraph.EdgeCollection.Count(i1 => i1.StartPoint.Equals(CurrentPoint));
         }
 
         public static IEnumerable<Point> GetInDegreeForPoint(IGraphBasics<Point, IEdgeBasics<Point>> CurrentGraph, Point CurrentPoint)
         {
             if (!CurrentGraph.PointCollection.Contains(CurrentPoint))
                 throw new Exception("Point " + CurrentPoint.ToString() + " not contains in graph " + CurrentGraph);
-            HashSet<Point> inPoints = new HashSet<Point>(CurrentGraph.EdgeCollection.Where(i1 => i1.EndPoint == CurrentPoint).Select(i1 => i1.StartPoint));
+            HashSet<Point> inPoints = new HashSet<Point>(CurrentGraph.EdgeCollection.Where(i1 => i1.EndPoint.Equals(CurrentPoint)).Select(i1 => i1.StartPoint));
             
             return inPoints;
         }
@@ -234,7 +234,7 @@ namespace DiscreteMaC_Lib.Graphes
         {
             if (!CurrentGraph.PointCollection.Contains(CurrentPoint))
                 throw new Exception("Point " + CurrentPoint.ToString() + " not contains in graph " + CurrentGraph);
-            HashSet<Point> inPoints = new HashSet<Point>(CurrentGraph.EdgeCollection.Where(i1 => i1.StartPoint == CurrentPoint).Select(i1 => i1.EndPoint));
+            HashSet<Point> inPoints = new HashSet<Point>(CurrentGraph.EdgeCollection.Where(i1 => i1.StartPoint.Equals(CurrentPoint)).Select(i1 => i1.EndPoint));
 
             return inPoints;
         }
@@ -280,7 +280,7 @@ namespace DiscreteMaC_Lib.Graphes
                  {
                      KeyValuePair<List<Point>, List<Point>> kvp = new KeyValuePair<List<Point>, List<Point>>(new List<Point>(), new List<Point>());
                      kvp.Key.Add(i1.StartPoint);
-                     if (i1.StartPoint != i1.EndPoint)
+                     if (!i1.StartPoint.Equals(i1.EndPoint))
                          kvp.Key.Add(i1.EndPoint);
                      kvp.Value.Add(i1.EndPoint);
                      return kvp;
@@ -346,7 +346,7 @@ namespace DiscreteMaC_Lib.Graphes
                 {
                     IGraphBasics<Point, IEdgeBasics<Point>> OneSidedStrongComponent = new BaseMinimalGraph<Point, IEdgeBasics<Point>>()
                     {
-                        GraphName = String.Format("One-side strong comp\n {0}", String.Join(",", trClosure)),
+                        GraphName = String.Format("One-side_strong_comp\n {0}", String.Join(",", trClosure)),
                         PointCollection = trClosure.ToList(),
                         EdgeCollection = originalGraph.EdgeCollection.Where(i1 => trClosure.Contains(i1.EndPoint) && trClosure.Contains(i1.StartPoint)).ToList()
                     };
@@ -362,7 +362,7 @@ namespace DiscreteMaC_Lib.Graphes
                     tmpListPoints.Remove(tmpPoint);
 
                     originalGraph.PointCollection = tmpListPoints;
-                    originalGraph.EdgeCollection = originalGraph.EdgeCollection.Where(i1 => i1.EndPoint != tmpPoint && i1.StartPoint != tmpPoint).ToList();
+                    originalGraph.EdgeCollection = originalGraph.EdgeCollection.Where(i1 => !i1.EndPoint.Equals(tmpPoint) && !i1.StartPoint.Equals(tmpPoint)).ToList();
                 }
 
                 if (originalGraph.PointCollection.Count() == 0)
@@ -416,7 +416,7 @@ namespace DiscreteMaC_Lib.Graphes
 
         public static bool CheckSimpleCycles(IGraphBasics<Point, AbstractEdge<Point>> CurrentGraph)
         {
-            if (CurrentGraph.EdgeCollection.Count(i1 => i1.StartPoint == i1.EndPoint) != 0)
+            if (CurrentGraph.EdgeCollection.Count(i1 => i1.StartPoint.Equals(i1.EndPoint)) != 0)
                 return true;
             else return false;
         }
@@ -435,7 +435,7 @@ namespace DiscreteMaC_Lib.Graphes
             for (int i = 0; i < listPaths.Count(); i++)
             {
                 Path currentPath = listPaths[i];
-                IEnumerable<AbstractEdge<Point>> candidatesToPath = CurrentGraph.EdgeCollection.Where(i1 => i1.StartPoint == currentPath.ListPathEdges.Last().EndPoint);
+                IEnumerable<AbstractEdge<Point>> candidatesToPath = CurrentGraph.EdgeCollection.Where(i1 => i1.StartPoint.Equals(currentPath.ListPathEdges.Last().EndPoint));
                 foreach (Edge e in candidatesToPath)
                 {
                     if (currentPath.ListPathPoints.Contains(e.EndPoint))
@@ -477,7 +477,7 @@ namespace DiscreteMaC_Lib.Graphes
             for (int i = 0; i < currentListPaths.Count(); i++)
             {
                 Path currentPath = currentListPaths[i];
-                IEnumerable<IEdgeBasics<Point>> candidatesToPath = CurrentGraph.EdgeCollection.Where(i1 => i1.StartPoint == currentPath.ListPathEdges.Last().EndPoint);
+                IEnumerable<IEdgeBasics<Point>> candidatesToPath = CurrentGraph.EdgeCollection.Where(i1 => i1.StartPoint.Equals(currentPath.ListPathEdges.Last().EndPoint));
                 foreach (IEdgeBasics<Point> e in candidatesToPath)
                 {
                     if (!currentPath.ListPathPoints.Contains(e.EndPoint))
@@ -570,7 +570,7 @@ namespace DiscreteMaC_Lib.Graphes
 
             foreach (Point p in CurrentGraph.PointCollection)
             {
-                IEnumerable<string> listEndPointsIDs = CurrentGraph.EdgeCollection.Where(i1 => i1.StartPoint == p).Select(i1 => i1.EndPoint.Name);
+                IEnumerable<string> listEndPointsIDs = CurrentGraph.EdgeCollection.Where(i1 => i1.StartPoint.Equals(p)).Select(i1 => i1.EndPoint.Name);
                 if (listEndPointsIDs.Count() > 0)
                 {
                     descriptionBuilder.Append(", ");
