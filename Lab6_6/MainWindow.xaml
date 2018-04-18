@@ -1,0 +1,39 @@
+﻿<Window x:Class="Lab6_6.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:LibDMaC="clr-namespace:DiscreteMaC_Lib.GraphNotations;assembly=DiscreteMaC_Lib"
+        xmlns:local="clr-namespace:Lab6_6"
+        mc:Ignorable="d"
+        Title="Лабараторная 6, Вариант 6." Height="480" Width="540">
+    <Window.Resources>
+        <LibDMaC:HtmlValuedAdjacencyMatrixNotation x:Key="HtmlValuedAdjacencyMatrixConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Построить базу по матрице С относительно вершины хi, то есть найти все кратчайшие пути от вершины хi ко всем остальным, (i номер вашего варианта). Примечание: в матрице С 0 означает отсутствие дуги между вершинами, то есть расстояние ∞" TextWrapping="WrapWithOverflow" Margin="5"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="С =" TextAlignment="Center" FontWeight="Bold" Margin="2"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="Мин. пути из x6" TextAlignment="Center" FontWeight="Bold" Margin="2"/>
+        <WebBrowser x:Name="BrowserG12" Grid.Row="2" Grid.Column="0" local:BrowserBehavior.Html="{Binding MainGraph, Converter={StaticResource HtmlValuedAdjacencyMatrixConverter}}"/>
+        <ListBox Grid.Row="2" Grid.Column="1" Margin="2" ItemsSource="{Binding ListMinPaths}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Key}"/>
+                        <TextBlock Text=": "/>
+                        <TextBlock Text="{Binding Value.PathLengrh, Mode=OneWay}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
