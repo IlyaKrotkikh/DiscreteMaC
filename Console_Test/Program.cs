@@ -16,36 +16,40 @@ namespace Console_Test
     {
         static bool stop;
         static TextAdjacencyMatrixNotation notation;
-        static AbstractGraph<Point,Edge> TestGrapch1;
+        static AbstractGraph<Point,Edge> TestGraph1;
 
         static void Main(string[] args)
         {
             stop = false;
             notation = new TextAdjacencyMatrixNotation();
+            while (!stop)
+            {
+                //PrintTestDirectedGraph();
+                //PrintTestDirectedGraphWithPointID();
+                //PrintTransitiveClosureForAllPoints(TestGrapch1);
+                //TestPrintIncludedSubGraphes();
+                //TestSearchPathInGraph();
+                //BuildGrapgAndTestIt();
+                //PrintTestOneSideStrongComponents();
+                //PrintTestRandomDirectedGraphWithValuedEdgeAndPointID();
+                PrintTestFindingMinValuedPaths();
 
-            //PrintTestDirectedGraph();
-            PrintTestDirectedGraphWithPointID();
-            //PrintTransitiveClosureForAllPoints(TestGrapch1);
-            //TestPrintIncludedSubGraphes();
-            //TestSearchPathInGraph();
+                if (Console.ReadLine() == "stop")
+                    stop = true;
 
-            Console.ReadLine();
-
-            BuildGrapgAndTestIt();
-
-            Console.ReadLine();
+            }
         }
 
         public static void BuildGrapgAndTestIt()
         {
             while (!stop)
             {
-                TestGrapch1 = GraphUtils.GenerateRandomDirectedGraph("g1", 4, 3);
+                TestGraph1 = GraphUtils.GenerateRandomDirectedGraph("g1", 4, 3);
 
-                Console.WriteLine(notation.ConvertFromGrapch(TestGrapch1));
+                Console.WriteLine(notation.ConvertFromGrapch(TestGraph1));
 
-                PrintTransitiveClosureForAllPoints(TestGrapch1);
-                PrintOneSidedComp(TestGrapch1);
+                PrintTransitiveClosureForAllPoints(TestGraph1);
+                PrintOneSidedComp(TestGraph1);
 
                 if (Console.ReadLine() == "stop")
                     stop = true;
@@ -55,27 +59,27 @@ namespace Console_Test
 
         public static void PrintTestDirectedGraph()
         {
-            TestGrapch1 = new DirectedGraph("g1");
+            TestGraph1 = new DirectedGraph("g1");
             Point x1 = new Point("x1");
-            TestGrapch1.AddPoint(x1);
+            TestGraph1.AddPoint(x1);
             Point x2 = new Point("x2");
-            TestGrapch1.AddPoint(x2);
+            TestGraph1.AddPoint(x2);
             Point x3 = new Point("x3");
-            TestGrapch1.AddPoint(x3);
+            TestGraph1.AddPoint(x3);
             Point x4 = new Point("x4");
-            TestGrapch1.AddPoint(x4);
+            TestGraph1.AddPoint(x4);
             //Point x5 = new Point("x5");
             //TestGrapch1.AddPoint(x5);
 
-            TestGrapch1.AddEdge(new Edge("a1", x1, x2));
-            TestGrapch1.AddEdge(new Edge("a2", x2, x3));
-            TestGrapch1.AddEdge(new Edge("a3", x2, x3));
-            //TestGrapch1.AddEdge(new Edge("a4", x2, x3));
-            //TestGrapch1.AddEdge(new Edge("a5", x3, x4));
-            //TestGrapch1.AddEdge(new Edge("a6", x3, x5));
-            //TestGrapch1.AddEdge(new Edge("a7", x5, x3));
+            TestGraph1.AddEdge(new Edge("a1", x1, x2));
+            TestGraph1.AddEdge(new Edge("a2", x2, x3));
+            TestGraph1.AddEdge(new Edge("a3", x2, x3));
+            //TestGraph1.AddEdge(new Edge("a4", x2, x3));
+            //TestGraph1.AddEdge(new Edge("a5", x3, x4));
+            //TestGraph1.AddEdge(new Edge("a6", x3, x5));
+            //TestGraph1.AddEdge(new Edge("a7", x5, x3));
 
-            Console.WriteLine(notation.ConvertFromGrapch(TestGrapch1));
+            Console.WriteLine(notation.ConvertFromGrapch(TestGraph1));
 
         }
 
@@ -110,7 +114,7 @@ namespace Console_Test
 
         public static void PrintResultONDirectedTree()
         {
-            Console.WriteLine("\nIs directed tree?: {0} \n", GraphUtils.IsDirectedTree(TestGrapch1));
+            Console.WriteLine("\nIs directed tree?: {0} \n", GraphUtils.IsDirectedTree(TestGraph1));
         }
 
         public static void PrintTransitiveClosureForAllPoints(IGraphBasics<Point,IEdgeBasics<Point>> CurrentGraph)
@@ -153,24 +157,57 @@ namespace Console_Test
 
         public static void TestSearchPathInGraph()
         {
-            while (!stop)
-            {
-                TestGrapch1 = GraphUtils.GenerateRandomDirectedGraph("g1", 4, 10);
 
-                Console.WriteLine(notation.ConvertFromGrapch(TestGrapch1));
-                Console.WriteLine("===");
-                PrintAllEdgesForGraph(TestGrapch1);
+            TestGraph1 = GraphUtils.GenerateRandomDirectedGraph("g1", 4, 10);
 
-                if (Console.ReadLine() == "stop")
-                    stop = true;
-
-            }
+            Console.WriteLine(notation.ConvertFromGrapch(TestGraph1));
+            Console.WriteLine("===");
+            PrintAllEdgesForGraph(TestGraph1);
         }
 
         public static void PrintAllEdgesForGraph(IGraphBasics<Point, IEdgeBasics<Point>> CurrentGraph)
         {
             foreach (KeyValuePair<Point,IEnumerable<AbstractPath<IEdgeBasics<Point>,Point>>> kvp in GraphUtils.GetAllPathsForGraph(CurrentGraph))
                 Console.WriteLine("Point: {0}\n    {1}", kvp.Key,String.Join("\n    ",kvp.Value.Select(i1 => String.Join("->",i1.ListPathPoints))));
+        }
+
+        public static void PrintTestOneSideStrongComponents()
+        {
+            DirectedGraph testGraph = GraphUtils.GenerateRandomDirectedGraph("G1", 5, 7);
+
+            IEnumerable<IGraphBasics<Point, IEdgeBasics<Point>>> lstOneSideStrongGraphs = GraphUtils.GetCollectionOneSidedStrongComponentsOfGraph(testGraph, testGraph.PointCollection.First());
+
+            Console.WriteLine(notation.ConvertFromGrapch(testGraph));
+
+            foreach (IGraphBasics<Point, IEdgeBasics<Point>> g in lstOneSideStrongGraphs)
+            {
+                Console.WriteLine();
+                Console.WriteLine(notation.ConvertFromGrapch(g));
+            }
+        }
+
+        public static void PrintTestRandomDirectedGraphWithValuedEdgeAndPointID()
+        {
+            DirectedGraphWithValuedEdgeAndPointID testGraph = GraphUtils.GenerateRandomDirectedGraphWithValuedEdgeAndPointID("G1", "x", 5);
+            TextAdjacencyValueedMatrixNotation testNotation = new TextAdjacencyValueedMatrixNotation();
+
+            Console.WriteLine(testNotation.ConvertFromGrapch(testGraph));
+        }
+
+        public static void PrintTestFindingMinValuedPaths()
+        {
+            DirectedGraphWithValuedEdgeAndPointID testGraph = GraphUtils.GenerateRandomDirectedGraphWithValuedEdgeAndPointID("G1", "x", 5);
+            TextAdjacencyValueedMatrixNotation testNotation = new TextAdjacencyValueedMatrixNotation();
+
+            Console.WriteLine(testNotation.ConvertFromGrapch(testGraph));
+
+            foreach (KeyValuePair<Point, ValuedPath> kvp in GraphUtils.GetMinimalPathFromPointToAllPointsInGraph(testGraph, testGraph.PointCollection.First()))
+            {
+                Console.WriteLine("{0}: {{{1}}} = {2}", 
+                    kvp.Key,
+                    String.Join("->",kvp.Value.ListPathPoints),
+                    kvp.Value.PathLengrh);
+            }
         }
     }
 }

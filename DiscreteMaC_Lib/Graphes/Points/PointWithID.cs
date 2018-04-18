@@ -43,6 +43,14 @@ namespace DiscreteMaC_Lib.Graphes.Points
             return defComparer.Equals(this, other);
         }
 
+        public override int CompareTo(Point other)
+        {
+            if (other == null) return 1;
+            else if (other is PointWithID)
+                return this.CompareTo(other as PointWithID);
+            else return base.CompareTo(other);
+        }
+
         public int CompareTo(PointWithID other)
         {
             if (other == null) return 1;
