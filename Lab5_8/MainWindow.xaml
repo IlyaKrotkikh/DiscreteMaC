@@ -82,7 +82,7 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <WebBrowser x:Name="BrowserG12" Grid.Row="2" Grid.Column="0" local:BrowserBehavior.Html="{Binding GraphG1, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
+                    <WebBrowser x:Name="BrowserG12" Grid.Row="2" Grid.Column="0" local:BrowserBehavior.Html="{Binding GraphG12, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
                     <WebBrowser x:Name="BrowserSelectedStrongComp" Grid.Row="2" Grid.Column="1" local:BrowserBehavior.Html="{Binding SelectedStrongComponent, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
                 </Grid>
             </TabItem>
