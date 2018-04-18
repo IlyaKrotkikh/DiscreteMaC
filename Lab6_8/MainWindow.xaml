@@ -5,8 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab6_8"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:LibDMaC="clr-namespace:DiscreteMaC_Lib.GraphNotations;assembly=DiscreteMaC_Lib"
+        Title="MainWindow" Height="500" Width="710">
+    <Window.Resources>
+        <LibDMaC:HtmlValuedAdjacencyMatrixNotation x:Key="HtmlValuedAdjacencyMatrixConverter"/>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+            <TextBlock Text="Лабораторная работа 6, Кротких." FontSize="24"/>
+        </Border>
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="Построить базу по матрице С относительно вершины хi, то есть найти все кратчайшие пути от вершины хi ко всем остальным." TextWrapping="Wrap" FontWeight="Bold" Margin="5"></TextBlock>
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="5">
+            <Button x:Name="BtnGetDefGraph" Margin="2" Click="BtnGetDefGraph_Click">
+                <TextBlock Text="Получить граф по-умолчанию" Margin="2"/>
+            </Button>
+            <Button x:Name="BtnGetRandGraph" Margin="2" Click="BtnGetRandGraph_Click">
+                <TextBlock Text="Случайный граф" Margin="2"/>
+            </Button>
+        </StackPanel>
+        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding MainGraph.PointCollection}" SelectedItem="{Binding SelectedPoint}" Margin="5"/>
+        <WebBrowser x:Name="BrowserG12" Grid.Row="3" Grid.Column="0" local:BrowserBehavior.Html="{Binding MainGraph, Converter={StaticResource HtmlValuedAdjacencyMatrixConverter}}"/>
+        <DataGrid Grid.Row="3" Grid.Column="1" Margin="2" ItemsSource="{Binding ListMinPaths}" AutoGenerateColumns="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="x" Width="25" Binding="{Binding Path=PointName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Путь" Binding="{Binding Path=Path}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Значение" Binding="{Binding Path=Value}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
