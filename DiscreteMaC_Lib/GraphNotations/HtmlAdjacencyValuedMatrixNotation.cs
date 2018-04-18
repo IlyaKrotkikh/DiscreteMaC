@@ -31,7 +31,7 @@ namespace DiscreteMaC_Lib.GraphNotations
         public override string ConvertFromGrapch(IGraphBasics<Point, IEdgeBasics<Point>> InitialGraph)
         {
             List<Point> points = (InitialGraph.PointCollection.ToList());
-            points.Sort((i1, i2) => { return i1.Name.CompareTo(i2.Name); });
+            points.Sort();
             StringBuilder HtmlStringBuilder = new StringBuilder();
             
             HtmlStringBuilder.AppendFormat("<!DOCTYPE HTML><html><head><meta charset =\"utf-8\"></head><body><table border = \"1\"><caption>{0}</caption>", InitialGraph.GraphName);
@@ -42,8 +42,8 @@ namespace DiscreteMaC_Lib.GraphNotations
             {
                 if (e is IValuedEdgeBasics<Point>)
                     if (String.IsNullOrEmpty(matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)]))
-                        matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] = (e as IValuedEdgeBasics<Point>).EdgeValue.ToString("#,##");
-                    else matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] += String.Format(", {0}", (e as IValuedEdgeBasics<Point>).EdgeValue.ToString("#,##"));
+                        matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] = (e as IValuedEdgeBasics<Point>).EdgeValue.ToString("0");
+                    else matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] += String.Format(", {0}", (e as IValuedEdgeBasics<Point>).EdgeValue.ToString("0"));
                 else if (String.IsNullOrEmpty(matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)]))
                     matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] = "1";
                 else matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] += ", 1";
@@ -53,7 +53,9 @@ namespace DiscreteMaC_Lib.GraphNotations
                 HtmlStringBuilder.AppendFormat("<tr><th>{0}</th>", points[i].ToString());
 
                 for (int j = 0; j < matrix.GetLength(1); j++)
-                    HtmlStringBuilder.AppendFormat("<td>{0}</td>", matrix[i, j].ToString());
+                    if (String.IsNullOrEmpty(matrix[i, j]))
+                        HtmlStringBuilder.AppendFormat("<td>{0}</td>", 0);
+                    else HtmlStringBuilder.AppendFormat("<td>{0}</td>", matrix[i, j].ToString());
 
                 HtmlStringBuilder.Append("</tr>");
             }

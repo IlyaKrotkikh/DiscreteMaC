@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 
 namespace DiscreteMaC_Lib.Graphes.Points
 {
-    public class Point : IEquatable<Point>
+    public class Point : IEquatable<Point>, IComparable<Point>
     {
         private Dictionary<Edge, string> _ListEdges { get; set; }
 
@@ -52,6 +52,11 @@ namespace DiscreteMaC_Lib.Graphes.Points
         {
             PointEqualityComparer defComparer = new PointEqualityComparer();
             return defComparer.Equals(this, other);
+        }
+
+        public virtual int CompareTo(Point other)
+        {
+            return Name.CompareTo(other.Name);
         }
     }
 }
