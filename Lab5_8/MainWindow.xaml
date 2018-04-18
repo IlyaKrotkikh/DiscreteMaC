@@ -1,0 +1,91 @@
+﻿<Window x:Class="Lab5_8.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab5_8"
+        xmlns:LibDMaC="clr-namespace:DiscreteMaC_Lib.GraphNotations;assembly=DiscreteMaC_Lib"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="600">
+    <Window.Resources>
+        <LibDMaC:HtmlAdjacencyMatrixNotation x:Key="HtmlAdjacencyMatrixConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+            <TextBlock Text="Лабораторная работа 5, Кротких." FontSize="24"/>
+        </Border>
+        <TabControl Grid.Row="1" Margin="5">
+            <TabItem Header="Настройка графов G1 и G2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="Графы G1 и G2 задаются матрицами смежности, которые формируются случайным образом." FontWeight="Bold" TextWrapping="Wrap" Margin="5"/>
+                    <TextBlock Grid.Row="1"  Grid.Column="0" Text="Название графа"/>
+                    <TextBox Grid.Row="1"  Grid.Column="1" Margin="2" Text="{Binding GraphG1Name}"/>
+                    <TextBlock Grid.Row="1"  Grid.Column="2" Text="Название графа"/>
+                    <TextBox Grid.Row="1"  Grid.Column="3" Margin="2" Text="{Binding GraphG2Name}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Кол-во вершин"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Margin="2" Text="{Binding GraphG1Points}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="Кол-во вершин"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" Margin="2" Text="{Binding GraphG2Points}"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Кол-во ребер"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Margin="2" Text="{Binding GraphG1Edges}"/>
+                    <TextBlock Grid.Row="3" Grid.Column="2" Text="Кол-во ребер"/>
+                    <TextBox Grid.Row="3" Grid.Column="3" Margin="2" Text="{Binding GraphG2Edges}"/>
+                    <Button x:Name="BtnGenGraphG1" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Click="BtnGenGraphG1_Click">
+                        <TextBlock Text="Задать граф"/>
+                    </Button>
+                    <Button x:Name="BtnGenGraphG2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Margin="2" Click="BtnGenGraphG2_Click">
+                        <TextBlock Text="Задать граф"/>
+                    </Button>
+                    <WebBrowser x:Name="BrowserG1" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" local:BrowserBehavior.Html="{Binding GraphG1, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
+                    <WebBrowser x:Name="BrowserG2" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" local:BrowserBehavior.Html="{Binding GraphG2, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Результат">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Найти G3 =  G1 ∩  G2." TextWrapping="Wrap" Margin="2"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="Разбить граф G3 на максимальные сильно связные подграфы, начиная с xi, где i = 8." TextWrapping="Wrap" Margin="2"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="G1 ∩  G2" TextAlignment="Center" TextWrapping="Wrap" FontWeight="Bold" Margin="2"/>
+                    <ComboBox Grid.Row="1" Grid.Column="1" Margin="2" ItemsSource="{Binding ListStrongComps}" SelectedItem="{Binding SelectedStrongComponent}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding GraphName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <WebBrowser x:Name="BrowserG12" Grid.Row="2" Grid.Column="0" local:BrowserBehavior.Html="{Binding GraphG1, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
+                    <WebBrowser x:Name="BrowserSelectedStrongComp" Grid.Row="2" Grid.Column="1" local:BrowserBehavior.Html="{Binding SelectedStrongComponent, Converter={StaticResource HtmlAdjacencyMatrixConverter}}"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

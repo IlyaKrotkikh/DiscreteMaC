@@ -7,7 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscreteMaC_Lib", "Discrete
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console_Test", "Console_Test\Console_Test.csproj", "{DC2E51FE-9A16-4172-AD8F-0ABAD586E62A}"
 EndProject
-<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1", "Lab1\Lab1.csproj", "{7895A7BC-5634-4D2C-98AA-A3F35E309841}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1_6", "Lab1_6\Lab1_6.csproj", "{E5D473DC-8DFA-45C9-BF5D-BE0A76D5A301}"
@@ -25,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab4_8", "Lab4_8\Lab4_8.csproj", "{0132D22D-9C9A-4E82-A76C-272DE20831D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab5_6", "Lab5_6\Lab5_6.csproj", "{4F8BB23A-BEBB-4832-8BF1-75D6C5F184A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab5_8", "Lab5_8\Lab5_8.csproj", "{DE915417-6874-4EBE-8212-512CCEC52021}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +77,10 @@ Global
 		{4F8BB23A-BEBB-4832-8BF1-75D6C5F184A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F8BB23A-BEBB-4832-8BF1-75D6C5F184A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F8BB23A-BEBB-4832-8BF1-75D6C5F184A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE915417-6874-4EBE-8212-512CCEC52021}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE915417-6874-4EBE-8212-512CCEC52021}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE915417-6874-4EBE-8212-512CCEC52021}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE915417-6874-4EBE-8212-512CCEC52021}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
