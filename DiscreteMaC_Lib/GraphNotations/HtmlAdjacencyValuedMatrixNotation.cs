@@ -42,8 +42,8 @@ namespace DiscreteMaC_Lib.GraphNotations
             {
                 if (e is IValuedEdgeBasics<Point>)
                     if (String.IsNullOrEmpty(matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)]))
-                        matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] = (e as IValuedEdgeBasics<Point>).EdgeValue.ToString("0");
-                    else matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] += String.Format(", {0}", (e as IValuedEdgeBasics<Point>).EdgeValue.ToString("0"));
+                        matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] = (e as IValuedEdgeBasics<Point>).EdgeValue.ToString("0.00");
+                    else matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] += String.Format(", {0}", (e as IValuedEdgeBasics<Point>).EdgeValue.ToString("0.00"));
                 else if (String.IsNullOrEmpty(matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)]))
                     matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] = "1";
                 else matrix[points.IndexOf(e.StartPoint), points.IndexOf(e.EndPoint)] += ", 1";
